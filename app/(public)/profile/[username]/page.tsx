@@ -68,6 +68,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
     .limit(20)
 
   return (
+    <div className="mx-auto max-w-[1280px] px-4 py-8">
     <div className="max-w-3xl mx-auto">
       <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
         <div className="flex items-start gap-5">
@@ -84,7 +85,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
               </div>
               <div className="flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5 text-gray-400" />
-                <span className="text-sm text-gray-500">Joined {formatDate(profile.createdAt.toISOString())}</span>
+                <span className="text-sm text-gray-500">Membro da {formatDate(profile.createdAt.toISOString())}</span>
               </div>
             </div>
             {profile.bio && <p className="text-sm text-gray-600 mt-2">{profile.bio}</p>}
@@ -181,6 +182,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
           )}
         </TabsContent>
       </Tabs>
+    </div>
     </div>
   )
 }

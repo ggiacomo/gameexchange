@@ -24,14 +24,14 @@ export function StepWishlist({ games, onGamesChange, onComplete, onSkip }: StepW
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">What games are you looking for?</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">Quali giochi stai cercando?</h2>
       <p className="text-gray-500 mb-6">
-        Add games to your wishlist and we&apos;ll notify you when someone near you has them available.
+        Aggiungi giochi alla tua wishlist e ti avviseremo quando qualcuno vicino a te li ha disponibili.
       </p>
 
       <GameSearchAutocomplete
         onSelect={addGame}
-        placeholder="Search for a game you want..."
+        placeholder="Cerca un gioco che vuoi..."
         excludeIds={games.map((g) => g.id)}
         className="mb-4"
       />
@@ -70,11 +70,11 @@ export function StepWishlist({ games, onGamesChange, onComplete, onSkip }: StepW
 
       <div className="flex gap-3">
         <Button size="lg" className="flex-1" onClick={onComplete}>
-          {games.length === 0 ? 'Skip for now' : `Finish (${games.length} games)`}
+          {games.length === 0 ? 'Salta per ora' : `Termina (${games.length} giochi)`}
         </Button>
         {games.length > 0 && (
           <Button size="lg" variant="outline" onClick={onSkip}>
-            Skip
+            Salta
           </Button>
         )}
       </div>

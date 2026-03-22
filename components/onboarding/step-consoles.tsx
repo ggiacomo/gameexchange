@@ -9,7 +9,7 @@ const CONSOLES = [
   { id: 'Xbox One', label: 'Xbox One', emoji: '🕹️' },
   { id: 'Nintendo Switch', label: 'Nintendo Switch', emoji: '🔴' },
   { id: 'PC', label: 'PC', emoji: '💻' },
-  { id: 'Other', label: 'Other', emoji: '🎯' },
+  { id: 'Other', label: 'Altro', emoji: '🎯' },
 ]
 
 interface StepConsolesProps {
@@ -29,8 +29,8 @@ export function StepConsoles({ selected, onSelect, onNext }: StepConsolesProps) 
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">Which consoles do you own?</h2>
-      <p className="text-gray-500 mb-6">Select all that apply. We&apos;ll use this to show relevant games.</p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">Quali console possiedi?</h2>
+      <p className="text-gray-500 mb-6">Seleziona tutte quelle che hai. Le useremo per mostrarti giochi pertinenti.</p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
         {CONSOLES.map((console_) => {
@@ -67,7 +67,7 @@ export function StepConsoles({ selected, onSelect, onNext }: StepConsolesProps) 
         onClick={onNext}
         disabled={selected.length === 0}
       >
-        Continue ({selected.length} selected)
+        Continua ({selected.length} selezionate)
       </Button>
     </div>
   )

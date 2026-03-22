@@ -3,12 +3,23 @@ import { getCurrentUser } from '@/lib/auth/server'
 import { OnboardingFlow } from '@/components/onboarding/onboarding-flow'
 import { Gamepad2 } from 'lucide-react'
 import Link from 'next/link'
+import { db } from '@/lib/db'
+import { users } from '@/lib/db/schema'
+import { eq } from 'drizzle-orm'
 
-export const metadata = { title: 'Get started — Gamexchange' }
+export const metadata = { title: 'Inizia — Gamexchange' }
 
 export default async function OnboardingPage() {
   const user = await getCurrentUser()
   if (!user) redirect('/login')
+
+  const [profile] = await db
+    .select({ id: users.id, city: users.city })
+    .from(users)
+    .where(eq(users.id, user.id))
+    .limit(1)
+
+  const hasProfile = !!(profile && profile.city)
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
@@ -23,7 +34,7 @@ export default async function OnboardingPage() {
         </div>
       </header>
       <main className="mx-auto max-w-2xl px-4 py-12">
-        <OnboardingFlow />
+        <OnboardingFlow hasProfile={hasProfile} />
       </main>
     </div>
   )

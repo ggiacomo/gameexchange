@@ -24,14 +24,14 @@ export function StepGames({ games, onGamesChange, onNext, onSkip }: StepGamesPro
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">Add games to your library</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">Aggiungi giochi alla tua libreria</h2>
       <p className="text-gray-500 mb-6">
-        Add games you own and might want to swap. You can always add more later.
+        Aggiungi i giochi che possiedi e potresti voler scambiare. Puoi sempre aggiungerne altri in seguito.
       </p>
 
       <GameSearchAutocomplete
         onSelect={addGame}
-        placeholder="Search for a game..."
+        placeholder="Cerca un gioco..."
         excludeIds={games.map((g) => g.id)}
         className="mb-4"
       />
@@ -70,17 +70,17 @@ export function StepGames({ games, onGamesChange, onNext, onSkip }: StepGamesPro
 
       {games.length > 0 && games.length < 3 && (
         <p className="text-sm text-amber-600 bg-amber-50 rounded-lg px-3 py-2 mb-4">
-          💡 Adding at least 3 games increases your chances of finding a swap
+          💡 Aggiungere almeno 3 giochi aumenta le tue possibilità di trovare uno scambio
         </p>
       )}
 
       <div className="flex gap-3">
         <Button size="lg" className="flex-1" onClick={onNext}>
-          {games.length === 0 ? 'Skip' : `Continue (${games.length} games)`}
+          {games.length === 0 ? 'Salta' : `Continua (${games.length} giochi)`}
         </Button>
         {games.length > 0 && (
           <Button size="lg" variant="outline" onClick={onSkip}>
-            Skip
+            Salta
           </Button>
         )}
       </div>
