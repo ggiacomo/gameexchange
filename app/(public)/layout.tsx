@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Gamepad2 } from 'lucide-react'
 import { SearchAutocomplete } from '@/components/ui/search-autocomplete'
+import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,8 +16,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <span className="font-extrabold text-lg text-white tracking-tight hidden sm:block">Gamexchange</span>
           </Link>
 
-          {/* Search con autocomplete */}
-          <SearchAutocomplete />
+          {/* Search — occupa tutto lo spazio disponibile */}
+          <div className="flex-1">
+            <SearchAutocomplete />
+          </div>
+
+          {/* Lingua */}
+          <LanguageSwitcher />
 
           {/* Auth buttons */}
           <div className="flex items-center gap-2 flex-shrink-0">

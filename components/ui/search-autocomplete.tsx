@@ -55,7 +55,7 @@ export function SearchAutocomplete() {
   }
 
   return (
-    <div ref={ref} className="relative flex-1 max-w-xl">
+    <div ref={ref} className="relative w-full">
       <form onSubmit={handleSubmit}>
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
