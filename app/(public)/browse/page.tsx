@@ -70,10 +70,10 @@ export default async function BrowsePage({
     <div>
       {/* Hero — solo se non ci sono filtri attivi */}
       {!hasFilters && (
-        <div className="relative overflow-hidden" style={{ minHeight: 260, backgroundImage: 'url(/background1.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="relative overflow-hidden" style={{ minHeight: 360, backgroundImage: 'url(/background1.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="absolute inset-0 bg-black/50" />
-          <div className="relative mx-auto max-w-[1280px] px-4 py-10 flex items-center justify-center">
-            <div className="bg-white rounded-2xl px-6 py-5 shadow-xl text-center max-w-sm w-full">
+          <div className="relative mx-auto max-w-[1280px] px-4 py-12 flex items-center justify-start">
+            <div className="bg-white rounded-2xl px-6 py-5 shadow-xl text-left max-w-sm w-full">
               <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-2">100% gratuito · Solo Italia</p>
               <h1 className="text-xl font-extrabold text-[#1a1a1a] leading-snug mb-2">
                 Scambia i tuoi videogiochi<br />con altri giocatori
@@ -81,7 +81,7 @@ export default async function BrowsePage({
               <p className="text-xs text-gray-400 mb-4">Gratis, semplice, senza intermediari.</p>
               <Link
                 href="/register"
-                className="inline-flex items-center justify-center w-full h-9 rounded-full bg-brand text-white text-sm font-bold hover:bg-brand-dark transition-colors"
+                className="inline-flex items-center justify-center h-9 px-6 rounded-full bg-brand text-white text-sm font-bold hover:bg-brand-dark transition-colors"
               >
                 Inizia a pubblicare →
               </Link>
