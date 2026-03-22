@@ -69,12 +69,9 @@ export default async function BrowsePage({
     <div>
       {/* Hero — solo se non ci sono filtri attivi */}
       {!hasFilters && (
-        <div className="relative bg-[#0f0f0f] overflow-hidden" style={{ minHeight: 420 }}>
-          {/* Grid pattern */}
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-            backgroundSize: '48px 48px'
-          }} />
+        <div className="relative overflow-hidden" style={{ minHeight: 420, backgroundImage: 'url(/background.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          {/* Overlay scuro per leggibilità */}
+          <div className="absolute inset-0 bg-black/50" />
           {/* Glow sinistro */}
           <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full opacity-20"
             style={{ background: 'radial-gradient(circle, #e4000f 0%, transparent 70%)', filter: 'blur(60px)' }} />
@@ -85,40 +82,42 @@ export default async function BrowsePage({
           <div className="relative mx-auto max-w-[1280px] px-4 py-20 md:py-28 flex flex-col md:flex-row items-center gap-12">
             {/* Testo */}
             <div className="flex-1 text-center md:text-left z-10">
-              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/10 rounded-full px-4 py-1.5 mb-6">
-                <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
-                <span className="text-xs font-semibold text-white/70 tracking-wide uppercase">100% gratuito</span>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1] mb-5">
-                Hai giochi che<br />
-                <span className="text-brand">non usi più?</span>
-              </h1>
-              <p className="text-white/50 text-lg mb-8 max-w-lg leading-relaxed">
-                Scambiali con altri giocatori vicino a te.<br />Gratis, semplice, senza intermediari.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <Link href="/register" className="h-13 px-8 py-3.5 rounded-full bg-brand text-white font-bold text-base hover:bg-brand-dark transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand/30 flex items-center justify-center">
-                  Inizia a pubblicare →
-                </Link>
-                <Link href="#games" className="h-13 px-8 py-3.5 rounded-full border border-white/20 text-white/80 font-semibold text-base hover:bg-white/10 transition-colors flex items-center justify-center">
-                  Sfoglia i giochi
-                </Link>
-              </div>
-              {/* Stats */}
-              <div className="flex gap-8 mt-10 justify-center md:justify-start">
-                <div>
-                  <p className="text-2xl font-extrabold text-white">{items.length}+</p>
-                  <p className="text-xs text-white/40 mt-0.5">Giochi disponibili</p>
+              <div className="bg-white rounded-3xl p-8 shadow-2xl">
+                <div className="inline-flex items-center gap-2 bg-gray-100 rounded-full px-4 py-1.5 mb-6">
+                  <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
+                  <span className="text-xs font-semibold text-gray-500 tracking-wide uppercase">100% gratuito</span>
                 </div>
-                <div className="w-px bg-white/10" />
-                <div>
-                  <p className="text-2xl font-extrabold text-white">0€</p>
-                  <p className="text-xs text-white/40 mt-0.5">Commissioni</p>
+                <h1 className="text-4xl md:text-5xl font-extrabold text-[#1a1a1a] tracking-tight leading-[1.1] mb-5">
+                  Hai giochi che<br />
+                  <span className="text-brand">non usi più?</span>
+                </h1>
+                <p className="text-gray-500 text-lg mb-8 max-w-lg leading-relaxed">
+                  Scambiali con altri giocatori vicino a te.<br />Gratis, semplice, senza intermediari.
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  <Link href="/register" className="h-13 px-8 py-3.5 rounded-full bg-brand text-white font-bold text-base hover:bg-brand-dark transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand/30 flex items-center justify-center">
+                    Inizia a pubblicare →
+                  </Link>
+                  <Link href="#games" className="h-13 px-8 py-3.5 rounded-full border-2 border-gray-200 text-gray-700 font-semibold text-base hover:bg-gray-50 transition-colors flex items-center justify-center">
+                    Sfoglia i giochi
+                  </Link>
                 </div>
-                <div className="w-px bg-white/10" />
-                <div>
-                  <p className="text-2xl font-extrabold text-white">ITA</p>
-                  <p className="text-xs text-white/40 mt-0.5">Solo Italia</p>
+                {/* Stats */}
+                <div className="flex gap-8 mt-8 justify-center md:justify-start">
+                  <div>
+                    <p className="text-2xl font-extrabold text-[#1a1a1a]">{items.length}+</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Giochi disponibili</p>
+                  </div>
+                  <div className="w-px bg-gray-200" />
+                  <div>
+                    <p className="text-2xl font-extrabold text-[#1a1a1a]">0€</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Commissioni</p>
+                  </div>
+                  <div className="w-px bg-gray-200" />
+                  <div>
+                    <p className="text-2xl font-extrabold text-[#1a1a1a]">ITA</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Solo Italia</p>
+                  </div>
                 </div>
               </div>
             </div>
