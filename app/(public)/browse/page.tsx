@@ -70,7 +70,7 @@ export default async function BrowsePage({
     <div>
       {/* Hero — solo se non ci sono filtri attivi */}
       {!hasFilters && (
-        <div className="relative overflow-hidden" style={{ minHeight: 420, backgroundImage: 'url(/background.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="relative overflow-hidden" style={{ minHeight: 420, backgroundImage: 'url(/background1.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
           {/* Overlay scuro per leggibilità */}
           <div className="absolute inset-0 bg-black/50" />
           {/* Glow sinistro */}
