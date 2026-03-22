@@ -11,6 +11,7 @@ export function proxy(request: NextRequest) {
     isAuthPage ||
     pathname === '/' ||
     pathname.startsWith('/browse') ||
+    pathname.startsWith('/games') ||
     pathname.startsWith('/api/auth') ||
     pathname === '/onboarding' ||
     pathname.startsWith('/auth/')

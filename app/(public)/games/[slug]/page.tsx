@@ -86,7 +86,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
         {!listings.length ? (
           <div className="rounded-2xl bg-white shadow-sm py-10 text-center">
             <p className="text-gray-400 text-sm">No one is swapping this game right now.</p>
-            <Link href="/wishlist"><Button variant="outline" size="sm" className="mt-3">Add to wishlist</Button></Link>
+            <Link href={currentUser ? '/wishlist' : '/login'}><Button variant="outline" size="sm" className="mt-3">Add to wishlist</Button></Link>
           </div>
         ) : (
           <div className="space-y-3">
@@ -107,7 +107,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
                     </div>
                   </div>
                   {item.notes && <p className="text-xs text-gray-400 hidden sm:block max-w-xs truncate">&ldquo;{item.notes}&rdquo;</p>}
-                  <Link href={`/proposals/new?libraryItemId=${item.id}&receiverId=${owner.id}`}>
+                  <Link href={currentUser ? `/proposals/new?libraryItemId=${item.id}&receiverId=${owner.id}` : `/login`}>
                     <Button size="sm" className="gap-1 flex-shrink-0">Propose <ArrowRight className="h-3.5 w-3.5" /></Button>
                   </Link>
                 </div>
