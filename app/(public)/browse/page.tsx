@@ -70,81 +70,21 @@ export default async function BrowsePage({
     <div>
       {/* Hero — solo se non ci sono filtri attivi */}
       {!hasFilters && (
-        <div className="relative overflow-hidden" style={{ minHeight: 420, backgroundImage: 'url(/background1.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-          {/* Overlay scuro per leggibilità */}
+        <div className="relative overflow-hidden" style={{ minHeight: 260, backgroundImage: 'url(/background1.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="absolute inset-0 bg-black/50" />
-          {/* Glow sinistro */}
-          <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full opacity-20"
-            style={{ background: 'radial-gradient(circle, #e4000f 0%, transparent 70%)', filter: 'blur(60px)' }} />
-          {/* Glow destro */}
-          <div className="absolute -right-32 bottom-0 h-[400px] w-[400px] rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, #ff6b00 0%, transparent 70%)', filter: 'blur(80px)' }} />
-
-          <div className="relative mx-auto max-w-[1280px] px-4 py-20 md:py-28 flex flex-col md:flex-row items-center gap-12">
-            {/* Testo */}
-            <div className="flex-1 text-center md:text-left z-10">
-              <div className="bg-white rounded-3xl p-8 shadow-2xl">
-                <div className="inline-flex items-center gap-2 bg-gray-100 rounded-full px-4 py-1.5 mb-6">
-                  <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
-                  <span className="text-xs font-semibold text-gray-500 tracking-wide uppercase">100% gratuito</span>
-                </div>
-                <h1 className="text-4xl md:text-5xl font-extrabold text-[#1a1a1a] tracking-tight leading-[1.1] mb-5">
-                  Hai giochi che<br />
-                  <span className="text-brand">non usi più?</span>
-                </h1>
-                <p className="text-gray-500 text-lg mb-8 max-w-lg leading-relaxed">
-                  Scambiali con altri giocatori vicino a te.<br />Gratis, semplice, senza intermediari.
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  <Link href="/register" className="h-13 px-8 py-3.5 rounded-full bg-brand text-white font-bold text-base hover:bg-brand-dark transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand/30 flex items-center justify-center">
-                    Inizia a pubblicare →
-                  </Link>
-                  <Link href="#games" className="h-13 px-8 py-3.5 rounded-full border-2 border-gray-200 text-gray-700 font-semibold text-base hover:bg-gray-50 transition-colors flex items-center justify-center">
-                    Sfoglia i giochi
-                  </Link>
-                </div>
-                {/* Stats */}
-                <div className="flex gap-8 mt-8 justify-center md:justify-start">
-                  <div>
-                    <p className="text-2xl font-extrabold text-[#1a1a1a]">{items.length}+</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Giochi disponibili</p>
-                  </div>
-                  <div className="w-px bg-gray-200" />
-                  <div>
-                    <p className="text-2xl font-extrabold text-[#1a1a1a]">0€</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Commissioni</p>
-                  </div>
-                  <div className="w-px bg-gray-200" />
-                  <div>
-                    <p className="text-2xl font-extrabold text-[#1a1a1a]">ITA</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Solo Italia</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Cover art */}
-            <div className="hidden lg:block relative flex-shrink-0 w-80 h-64">
-              {items.slice(0, 5).map((item, i) => {
-                const angles = [-8, -3, 2, 7, 12]
-                const tops = [20, 0, 30, 10, 40]
-                const lefts = [0, 60, 120, 175, 230]
-                return (
-                  <div
-                    key={item.id}
-                    className="absolute h-44 w-28 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-                    style={{ transform: `rotate(${angles[i]}deg)`, top: tops[i], left: lefts[i], zIndex: i }}
-                  >
-                    {item.games.cover_url ? (
-                      <Image src={item.games.cover_url} alt={item.games.title} fill className="object-cover" sizes="112px" />
-                    ) : (
-                      <div className="h-full bg-white/5 flex items-center justify-center">
-                        <Gamepad2 className="h-8 w-8 text-white/20" />
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
+          <div className="relative mx-auto max-w-[1280px] px-4 py-10 flex items-center justify-center">
+            <div className="bg-white rounded-2xl px-6 py-5 shadow-xl text-center max-w-sm w-full">
+              <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-2">100% gratuito · Solo Italia</p>
+              <h1 className="text-xl font-extrabold text-[#1a1a1a] leading-snug mb-2">
+                Scambia i tuoi videogiochi<br />con altri giocatori
+              </h1>
+              <p className="text-xs text-gray-400 mb-4">Gratis, semplice, senza intermediari.</p>
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center w-full h-9 rounded-full bg-brand text-white text-sm font-bold hover:bg-brand-dark transition-colors"
+              >
+                Inizia a pubblicare →
+              </Link>
             </div>
           </div>
         </div>
