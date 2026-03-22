@@ -6,7 +6,7 @@ export const metadata = { title: 'Registrati — Gamexchange' }
 
 export default async function RegisterPage() {
   const user = await getCurrentUser()
-  if (user) redirect('/')
+  if (user) redirect('/feed')
 
   return (
     <>

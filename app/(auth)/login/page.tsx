@@ -6,7 +6,7 @@ export const metadata = { title: 'Accedi — Gamexchange' }
 
 export default async function LoginPage() {
   const user = await getCurrentUser()
-  if (user) redirect('/')
+  if (user) redirect('/feed')
 
   return (
     <>

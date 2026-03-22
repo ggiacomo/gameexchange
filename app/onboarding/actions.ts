@@ -3,7 +3,6 @@
 import { db } from '@/lib/db'
 import { userLibrary, userWishlist, users } from '@/lib/db/schema'
 import { getCurrentUser } from '@/lib/auth/server'
-import { redirect } from 'next/navigation'
 import { eq } from 'drizzle-orm'
 
 export async function saveProfile(data: {
@@ -40,10 +39,10 @@ export async function saveProfile(data: {
 }
 
 export async function saveLibraryItems(gameIds: number[]): Promise<void> {
-  const user = await getCurrentUser()
-  if (!user) redirect('/login')
-
   if (gameIds.length === 0) return
+
+  const user = await getCurrentUser()
+  if (!user) return
 
   await db
     .insert(userLibrary)
@@ -59,10 +58,10 @@ export async function saveLibraryItems(gameIds: number[]): Promise<void> {
 }
 
 export async function saveWishlistItems(gameIds: number[]): Promise<void> {
-  const user = await getCurrentUser()
-  if (!user) redirect('/login')
-
   if (gameIds.length === 0) return
+
+  const user = await getCurrentUser()
+  if (!user) return
 
   await db
     .insert(userWishlist)
