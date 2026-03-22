@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/expire-proposals",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/wishlist-matches",
+      "schedule": "0 10 * * 1"
+    }
+  ]
+}
