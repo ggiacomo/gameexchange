@@ -1,6 +1,6 @@
 import { db } from '@/lib/db'
 import { userLibrary, games, users } from '@/lib/db/schema'
-import { eq, inArray } from 'drizzle-orm'
+import { eq, inArray, sql } from 'drizzle-orm'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Gamepad2 } from 'lucide-react'
@@ -52,6 +52,16 @@ export default async function BrowsePage({
     const city = params.city.toLowerCase()
     items = items.filter((item) => item.users.city?.toLowerCase().includes(city))
   }
+
+  // Città disponibili (utenti con almeno un gioco disponibile)
+  const cityRows = await db
+    .selectDistinct({ city: users.city })
+    .from(users)
+    .innerJoin(userLibrary, eq(userLibrary.userId, users.id))
+    .where(inArray(userLibrary.status, ['available', 'with_compensation']))
+    .orderBy(users.city)
+
+  const cities = cityRows.map((r) => r.city).filter(Boolean) as string[]
 
   const hasFilters = params.q || params.platform || params.city
 
@@ -141,10 +151,11 @@ export default async function BrowsePage({
       )}
 
       <div className="mx-auto max-w-[1280px] px-4 py-8" id="games">
-        {/* Filtri platform come pill */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        {/* Filtri */}
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          {/* Platform pills */}
           <Link
-            href={hasFilters ? '/browse' : '#'}
+            href={params.city ? `/browse?city=${params.city}` : '/browse'}
             className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${!params.platform ? 'bg-[#1a1a1a] text-white' : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm'}`}
           >
             Tutti
@@ -152,17 +163,36 @@ export default async function BrowsePage({
           {PLATFORMS.map((p) => (
             <Link
               key={p}
-              href={`/browse?${new URLSearchParams({ ...(params.q ? { q: params.q } : {}), platform: p })}`}
+              href={`/browse?${new URLSearchParams({ ...(params.q ? { q: params.q } : {}), ...(params.city ? { city: params.city } : {}), platform: p })}`}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${params.platform === p ? 'bg-[#1a1a1a] text-white' : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm'}`}
             >
               {p}
             </Link>
           ))}
-          {params.city && (
-            <span className="px-4 py-2 rounded-full text-sm font-semibold bg-brand text-white">
-              📍 {params.city}
-            </span>
+
+          {/* Separatore */}
+          {cities.length > 0 && <div className="w-px h-6 bg-gray-300 mx-1" />}
+
+          {/* Dropdown città */}
+          {cities.length > 0 && (
+            <form method="GET" action="/browse">
+              {params.platform && <input type="hidden" name="platform" value={params.platform} />}
+              {params.q && <input type="hidden" name="q" value={params.q} />}
+              <select
+                name="city"
+                defaultValue={params.city ?? ''}
+                onChange={(e) => (e.target.form as HTMLFormElement).submit()}
+                className="h-9 px-3 pr-8 rounded-full text-sm font-semibold bg-white shadow-sm border-none focus:outline-none focus:ring-2 focus:ring-brand appearance-none cursor-pointer text-gray-600"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%239ca3af\' stroke-width=\'2\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
+              >
+                <option value="">📍 Tutte le città</option>
+                {cities.map((city) => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
+              </select>
+            </form>
           )}
+
           {hasFilters && (
             <Link href="/browse" className="px-4 py-2 rounded-full text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
               × Reset
