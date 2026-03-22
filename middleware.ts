@@ -9,6 +9,8 @@ export function middleware(request: NextRequest) {
   const isAuthPage = pathname === '/login' || pathname === '/register'
   const isPublicPath =
     isAuthPage ||
+    pathname === '/' ||
+    pathname.startsWith('/browse') ||
     pathname.startsWith('/api/auth') ||
     pathname === '/onboarding' ||
     pathname.startsWith('/auth/')

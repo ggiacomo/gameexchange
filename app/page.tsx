@@ -3,6 +3,6 @@ import { getCurrentUser } from '@/lib/auth/server'
 
 export default async function RootPage() {
   const user = await getCurrentUser()
-  if (user) redirect('/(main)')
-  redirect('/login')
+  if (user) redirect('/feed')
+  redirect('/browse')
 }

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import type { LibraryItemWithGameAndUser } from '@/types/database'
 
-export const metadata = { title: 'Home — Gamexchange' }
+export const metadata = { title: 'Feed — Gamexchange' }
 
 export default async function HomePage({
   searchParams,
