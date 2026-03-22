@@ -62,7 +62,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
     .filter((r) => r.user_wishlist.userId !== (currentUser?.id ?? ''))
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex gap-6 mb-10">
         <div className="relative h-40 w-28 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 shadow-md">
           {game.cover_url ? (
