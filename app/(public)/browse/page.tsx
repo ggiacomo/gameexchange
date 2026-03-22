@@ -1,14 +1,12 @@
 import { db } from '@/lib/db'
 import { userLibrary, games, users } from '@/lib/db/schema'
-import { eq, inArray, ilike, and, or } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, Filter, Gamepad2 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { formatCondition } from '@/lib/utils/format'
+import { Gamepad2 } from 'lucide-react'
 import type { LibraryItemWithGameAndUser } from '@/types/database'
 
-export const metadata = { title: 'Browse — Gamexchange' }
+export const metadata = { title: 'Gamexchange — Scambia i tuoi videogiochi' }
 
 const PLATFORMS = ['PS5', 'PS4', 'Xbox Series X/S', 'Xbox One', 'Nintendo Switch', 'PC']
 
@@ -52,59 +50,117 @@ export default async function BrowsePage({
   }
   if (params.city) {
     const city = params.city.toLowerCase()
-    items = items.filter((item) => item.users.city.toLowerCase().includes(city))
+    items = items.filter((item) => item.users.city?.toLowerCase().includes(city))
   }
+
+  const hasFilters = params.q || params.platform || params.city
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-1">Browse games</h1>
-        <p className="text-gray-500 text-sm">Find games available to swap near you</p>
-      </div>
-
-      <form className="flex flex-wrap gap-2.5 mb-6">
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <input name="q" defaultValue={params.q} placeholder="Search game title..." className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent shadow-sm" />
-        </div>
-        <div className="relative">
-          <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-          <select name="platform" defaultValue={params.platform ?? ''} className="h-11 appearance-none rounded-xl border border-gray-200 bg-white pl-10 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent shadow-sm">
-            <option value="">All platforms</option>
-            {PLATFORMS.map((p) => (<option key={p} value={p}>{p}</option>))}
-          </select>
-        </div>
-        <input name="city" defaultValue={params.city} placeholder="City..." className="h-11 w-36 rounded-xl border border-gray-200 bg-white px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent shadow-sm" />
-        <button type="submit" className="h-11 px-5 rounded-full bg-brand text-white text-sm font-semibold hover:bg-brand-dark transition-colors">Search</button>
-        {(params.q || params.platform || params.city) && (
-          <Link href="/browse" className="h-11 px-5 rounded-full border-2 border-[#1a1a1a] text-[#1a1a1a] text-sm font-semibold hover:bg-[#1a1a1a] hover:text-white transition-all flex items-center">Reset</Link>
-        )}
-      </form>
-
-      {items.length === 0 ? (
-        <div className="py-24 text-center">
-          <Gamepad2 className="h-14 w-14 text-gray-200 mx-auto mb-4" />
-          <h3 className="text-base font-bold text-gray-900 mb-1">No games found</h3>
-          <p className="text-gray-400 text-sm">Try adjusting your filters</p>
-        </div>
-      ) : (
-        <>
-          <p className="text-sm text-gray-400 font-medium mb-4">{items.length} games available</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
-            {items.map((item) => (
-              <BrowseCard key={item.id} item={item} />
-            ))}
+      {/* Hero — solo se non ci sono filtri attivi */}
+      {!hasFilters && (
+        <div className="relative bg-[#1a1a1a] overflow-hidden">
+          {/* Pattern decorativo */}
+          <div className="absolute inset-0 opacity-10"
+            style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #e4000f 0%, transparent 50%), radial-gradient(circle at 80% 20%, #e4000f 0%, transparent 40%)' }}
+          />
+          <div className="relative mx-auto max-w-[1280px] px-4 py-16 md:py-24 flex flex-col md:flex-row items-center gap-10">
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+                Hai giochi che<br />non usi più?
+              </h1>
+              <p className="text-white/60 text-lg mb-8 max-w-md">
+                Scambiali con altri giocatori vicino a te. Gratis, semplice, senza intermediari.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                <Link
+                  href="/register"
+                  className="h-12 px-8 rounded-full bg-brand text-white font-bold text-base hover:bg-brand-dark transition-colors"
+                >
+                  Inizia a pubblicare
+                </Link>
+                <Link
+                  href="#games"
+                  className="h-12 px-8 rounded-full border-2 border-white/20 text-white font-bold text-base hover:bg-white/10 transition-colors"
+                >
+                  Sfoglia i giochi
+                </Link>
+              </div>
+            </div>
+            {/* Cover art decorativi */}
+            <div className="hidden md:flex gap-3 flex-shrink-0 rotate-3">
+              {items.slice(0, 4).map((item) => (
+                <div key={item.id} className="relative h-36 w-24 rounded-xl overflow-hidden shadow-2xl even:-translate-y-4">
+                  {item.games.cover_url ? (
+                    <Image src={item.games.cover_url} alt={item.games.title} fill className="object-cover" sizes="96px" />
+                  ) : (
+                    <div className="h-full bg-white/10 flex items-center justify-center">
+                      <Gamepad2 className="h-8 w-8 text-white/30" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex justify-center gap-2">
-            {page > 1 && (
-              <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page - 1) })}`} className="px-5 py-2.5 rounded-full border-2 border-[#1a1a1a] text-sm font-semibold hover:bg-[#1a1a1a] hover:text-white transition-all">Previous</Link>
-            )}
-            {items.length === pageSize && (
-              <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page + 1) })}`} className="px-5 py-2.5 rounded-full bg-[#1a1a1a] text-white text-sm font-semibold hover:bg-[#333] transition-colors">Next</Link>
-            )}
-          </div>
-        </>
+        </div>
       )}
+
+      <div className="mx-auto max-w-[1280px] px-4 py-8" id="games">
+        {/* Filtri platform come pill */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <Link
+            href={hasFilters ? '/browse' : '#'}
+            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${!params.platform ? 'bg-[#1a1a1a] text-white' : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm'}`}
+          >
+            Tutti
+          </Link>
+          {PLATFORMS.map((p) => (
+            <Link
+              key={p}
+              href={`/browse?${new URLSearchParams({ ...(params.q ? { q: params.q } : {}), platform: p })}`}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${params.platform === p ? 'bg-[#1a1a1a] text-white' : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm'}`}
+            >
+              {p}
+            </Link>
+          ))}
+          {params.city && (
+            <span className="px-4 py-2 rounded-full text-sm font-semibold bg-brand text-white">
+              📍 {params.city}
+            </span>
+          )}
+          {hasFilters && (
+            <Link href="/browse" className="px-4 py-2 rounded-full text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
+              × Reset
+            </Link>
+          )}
+        </div>
+
+        {/* Risultati */}
+        {items.length === 0 ? (
+          <div className="py-24 text-center">
+            <Gamepad2 className="h-14 w-14 text-gray-200 mx-auto mb-4" />
+            <h3 className="text-base font-bold text-[#1a1a1a] mb-1">Nessun gioco trovato</h3>
+            <p className="text-gray-400 text-sm">Prova a cambiare i filtri</p>
+          </div>
+        ) : (
+          <>
+            <p className="text-sm text-gray-400 font-medium mb-4">{items.length} giochi disponibili</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
+              {items.map((item) => (
+                <BrowseCard key={item.id} item={item} />
+              ))}
+            </div>
+            <div className="flex justify-center gap-2">
+              {page > 1 && (
+                <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page - 1) })}`} className="px-5 py-2.5 rounded-full border-2 border-[#1a1a1a] text-sm font-semibold hover:bg-[#1a1a1a] hover:text-white transition-all">Precedente</Link>
+              )}
+              {items.length === pageSize && (
+                <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page + 1) })}`} className="px-5 py-2.5 rounded-full bg-[#1a1a1a] text-white text-sm font-semibold hover:bg-[#333] transition-colors">Successiva</Link>
+              )}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
