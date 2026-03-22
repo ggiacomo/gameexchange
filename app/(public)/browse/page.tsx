@@ -1,60 +1,50 @@
 import { db } from '@/lib/db'
 import { userLibrary, games, users } from '@/lib/db/schema'
-import { eq, inArray, sql } from 'drizzle-orm'
+import { eq, inArray, and, ilike, sql } from 'drizzle-orm'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Gamepad2 } from 'lucide-react'
-import type { LibraryItemWithGameAndUser } from '@/types/database'
 import { CitySelect } from '@/components/ui/city-select'
+import { LoadMoreBrowse } from '@/components/browse/load-more-browse'
+import type { FeedItem } from '@/components/feed/load-more-games'
 
 export const metadata = { title: 'Gamexchange — Scambia i tuoi videogiochi' }
 
 const PLATFORMS = ['PS5', 'PS4', 'Xbox Series X/S', 'Xbox One', 'Nintendo Switch', 'PC']
+const PAGE_SIZE = 24
 
 export default async function BrowsePage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; platform?: string; city?: string; page?: string }>
+  searchParams: Promise<{ q?: string; platform?: string; city?: string }>
 }) {
   const params = await searchParams
-  const page = parseInt(params.page ?? '1')
-  const pageSize = 24
-  const offset = (page - 1) * pageSize
+
+  const conditions = [inArray(userLibrary.status, ['available', 'with_compensation'])]
+  if (params.q) conditions.push(ilike(games.title, `%${params.q}%`))
+  if (params.platform) conditions.push(sql`${games.platforms} @> ARRAY[${params.platform}]::text[]`)
+  if (params.city) conditions.push(ilike(users.city, `%${params.city}%`))
 
   const rows = await db
     .select()
     .from(userLibrary)
     .innerJoin(games, eq(userLibrary.gameId, games.id))
     .innerJoin(users, eq(userLibrary.userId, users.id))
-    .where(inArray(userLibrary.status, ['available', 'with_compensation']))
+    .where(and(...conditions))
     .orderBy(userLibrary.createdAt)
-    .limit(pageSize)
-    .offset(offset)
+    .limit(PAGE_SIZE + 1)
 
-  let items: LibraryItemWithGameAndUser[] = rows.map(({ user_library: li, games: g, users: u }) => ({
+  const hasMore = rows.length > PAGE_SIZE
+  const items: FeedItem[] = rows.slice(0, PAGE_SIZE).map(({ user_library: li, games: g, users: u }) => ({
     id: li.id, user_id: li.userId, game_id: li.gameId,
-    status: li.status as LibraryItemWithGameAndUser['status'],
+    status: li.status,
     min_compensation: li.minCompensation ? Number(li.minCompensation) : null,
-    condition: li.condition as LibraryItemWithGameAndUser['condition'],
+    condition: li.condition,
     notes: li.notes, created_at: li.createdAt.toISOString(), updated_at: li.updatedAt.toISOString(),
     games: { id: g.id, title: g.title, cover_url: g.coverUrl, platforms: g.platforms ?? null, genres: g.genres ?? null, release_year: g.releaseYear, igdb_slug: g.igdbSlug },
-    users: { id: u.id, username: u.username, avatar_url: u.avatarUrl, bio: u.bio, city: u.city, country: u.country, email_confirmed: u.emailConfirmed, plan: u.plan as 'free' | 'pro', plan_expires_at: u.planExpiresAt?.toISOString() ?? null, rating_avg: Number(u.ratingAvg), swaps_completed: u.swapsCompleted, is_suspended: u.isSuspended, created_at: u.createdAt.toISOString(), updated_at: u.updatedAt.toISOString() },
+    users: { id: u.id, username: u.username, avatar_url: u.avatarUrl, city: u.city },
   }))
 
-  if (params.q) {
-    const q = params.q.toLowerCase()
-    items = items.filter((item) => item.games.title.toLowerCase().includes(q))
-  }
-  if (params.platform) {
-    const plat = params.platform.toLowerCase()
-    items = items.filter((item) => item.games.platforms?.some((p) => p.toLowerCase().includes(plat)))
-  }
-  if (params.city) {
-    const city = params.city.toLowerCase()
-    items = items.filter((item) => item.users.city?.toLowerCase().includes(city))
-  }
-
-  // Città disponibili (utenti con almeno un gioco disponibile)
+  // Città disponibili
   const cityRows = await db
     .selectDistinct({ city: users.city })
     .from(users)
@@ -63,12 +53,11 @@ export default async function BrowsePage({
     .orderBy(users.city)
 
   const cities = cityRows.map((r) => r.city).filter(Boolean) as string[]
-
   const hasFilters = params.q || params.platform || params.city
 
   return (
     <div>
-      {/* Hero — solo se non ci sono filtri attivi */}
+      {/* Hero */}
       {!hasFilters && (
         <div className="relative overflow-hidden" style={{ minHeight: 360, backgroundImage: 'url(/background2.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
       )}
@@ -76,7 +65,6 @@ export default async function BrowsePage({
       <div className="mx-auto max-w-[1280px] px-4 py-8" id="games">
         {/* Filtri */}
         <div className="flex flex-wrap items-center gap-2 mb-6">
-          {/* Platform pills */}
           <Link
             href={params.city ? `/browse?city=${params.city}` : '/browse'}
             className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${!params.platform ? 'bg-[#1a1a1a] text-white' : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm'}`}
@@ -93,10 +81,8 @@ export default async function BrowsePage({
             </Link>
           ))}
 
-          {/* Separatore */}
           {cities.length > 0 && <div className="w-px h-6 bg-gray-300 mx-1" />}
 
-          {/* Dropdown città */}
           <CitySelect cities={cities} currentCity={params.city} currentPlatform={params.platform} currentQ={params.q} />
 
           {hasFilters && (
@@ -115,48 +101,16 @@ export default async function BrowsePage({
           </div>
         ) : (
           <>
-            <p className="text-sm text-gray-400 font-medium mb-4">{items.length} giochi disponibili</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
-              {items.map((item) => (
-                <BrowseCard key={item.id} item={item} />
-              ))}
-            </div>
-            <div className="flex justify-center gap-2">
-              {page > 1 && (
-                <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page - 1) })}`} className="px-5 py-2.5 rounded-full border-2 border-[#1a1a1a] text-sm font-semibold hover:bg-[#1a1a1a] hover:text-white transition-all">Precedente</Link>
-              )}
-              {items.length === pageSize && (
-                <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page + 1) })}`} className="px-5 py-2.5 rounded-full bg-[#1a1a1a] text-white text-sm font-semibold hover:bg-[#333] transition-colors">Successiva</Link>
-              )}
-            </div>
+            <p className="text-sm text-gray-400 font-medium mb-4">{items.length}{hasMore ? '+' : ''} giochi disponibili</p>
+            <LoadMoreBrowse
+              initialItems={items}
+              initialHasMore={hasMore}
+              initialOffset={PAGE_SIZE}
+              filters={{ q: params.q, platform: params.platform, city: params.city }}
+            />
           </>
         )}
       </div>
     </div>
-  )
-}
-
-function BrowseCard({ item }: { item: LibraryItemWithGameAndUser }) {
-  const game = item.games
-  const owner = item.users
-  return (
-    <Link href={`/games/${game.igdb_slug ?? game.id}`} className="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-200">
-      <div className="relative aspect-[3/4] bg-gray-100">
-        {game.cover_url ? (
-          <Image src={game.cover_url} alt={game.title} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" sizes="(max-width: 640px) 50vw, 20vw" />
-        ) : (
-          <div className="flex h-full items-center justify-center"><Gamepad2 className="h-8 w-8 text-gray-300" /></div>
-        )}
-        {item.status === 'with_compensation' && item.min_compensation && (
-          <div className="absolute top-2 left-2">
-            <span className="text-[10px] font-bold bg-brand text-white px-2 py-0.5 rounded-full">+€{item.min_compensation.toFixed(0)}</span>
-          </div>
-        )}
-      </div>
-      <div className="p-2.5">
-        <p className="text-xs font-bold text-[#1a1a1a] leading-tight line-clamp-2 mb-1">{game.title}</p>
-        <p className="text-[11px] text-gray-400">@{owner.username} · {owner.city}</p>
-      </div>
-    </Link>
   )
 }
