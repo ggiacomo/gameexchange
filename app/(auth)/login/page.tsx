@@ -10,7 +10,7 @@ export default async function LoginPage() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">Welcome back</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-1">Welcome back</h1>
       <p className="text-sm text-gray-500 mb-6">Sign in to your account</p>
       <LoginForm />
     </>

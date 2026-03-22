@@ -33,9 +33,9 @@ async function getKPIs() {
 
 function KPICard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5">
+    <div className="bg-white rounded-2xl shadow-sm p-5">
       <p className="text-sm text-gray-500">{label}</p>
-      <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+      <p className="text-3xl font-extrabold text-[#1a1a1a] mt-1">{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
     </div>
   )
@@ -45,7 +45,7 @@ export default async function AdminOverviewPage() {
   const kpis = await getKPIs()
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Overview</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Overview</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <KPICard label="Total users" value={kpis.totalUsers} />
         <KPICard label="Active (7d)" value={kpis.active7d} />

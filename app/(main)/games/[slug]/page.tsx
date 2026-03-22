@@ -72,7 +72,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{game.title}</h1>
+          <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-2">{game.title}</h1>
           <div className="flex flex-wrap gap-2 mb-3">
             {game.platforms?.map((p) => <Badge key={p} variant="default">{p}</Badge>)}
             {game.genres?.slice(0, 3).map((g) => <Badge key={g} variant="info">{g}</Badge>)}
@@ -82,10 +82,10 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
       </div>
 
       <section className="mb-10">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Available to swap ({listings.length})</h2>
+        <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-4">Available to swap ({listings.length})</h2>
         {!listings.length ? (
-          <div className="rounded-2xl border border-dashed border-gray-300 py-10 text-center">
-            <p className="text-gray-500">No one is swapping this game right now.</p>
+          <div className="rounded-2xl bg-white shadow-sm py-10 text-center">
+            <p className="text-gray-400 text-sm">No one is swapping this game right now.</p>
             <Link href="/wishlist"><Button variant="outline" size="sm" className="mt-3">Add to wishlist</Button></Link>
           </div>
         ) : (
@@ -93,20 +93,20 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
             {listings.map((item) => {
               const owner = item.users
               return (
-                <div key={item.id} className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand transition-colors">
+                <div key={item.id} className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200">
                   <Link href={`/profile/${owner.username}`}>
                     <Avatar src={owner.avatar_url} alt={owner.username} fallback={owner.username} size="md" />
                   </Link>
                   <div className="flex-1 min-w-0">
-                    <Link href={`/profile/${owner.username}`} className="font-medium text-gray-900 hover:text-brand text-sm">@{owner.username}</Link>
-                    <p className="text-xs text-gray-500">{owner.city} · {formatCondition(item.condition)}{item.status === 'with_compensation' && item.min_compensation ? ` · +€${item.min_compensation}` : ''}</p>
+                    <Link href={`/profile/${owner.username}`} className="font-bold text-[#1a1a1a] hover:text-brand text-sm">@{owner.username}</Link>
+                    <p className="text-xs text-gray-400">{owner.city} · {formatCondition(item.condition)}{item.status === 'with_compensation' && item.min_compensation ? ` · +€${item.min_compensation}` : ''}</p>
                     <div className="flex items-center gap-1 mt-0.5">
                       <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                       <span className="text-xs text-gray-500">{owner.rating_avg.toFixed(1)}</span>
                       <span className="text-xs text-gray-400">({owner.swaps_completed} swaps)</span>
                     </div>
                   </div>
-                  {item.notes && <p className="text-xs text-gray-500 hidden sm:block max-w-xs truncate">&ldquo;{item.notes}&rdquo;</p>}
+                  {item.notes && <p className="text-xs text-gray-400 hidden sm:block max-w-xs truncate">&ldquo;{item.notes}&rdquo;</p>}
                   <Link href={`/proposals/new?libraryItemId=${item.id}&receiverId=${owner.id}`}>
                     <Button size="sm" className="gap-1 flex-shrink-0">Propose <ArrowRight className="h-3.5 w-3.5" /></Button>
                   </Link>
@@ -119,10 +119,10 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
 
       {wanters.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">People looking for this ({wanters.length})</h2>
+          <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-4">People looking for this ({wanters.length})</h2>
           <div className="flex flex-wrap gap-2">
             {wanters.map(({ user_wishlist: w, users: u }) => (
-              <Link key={w.id} href={`/profile/${u.username}`} className="flex items-center gap-2 px-3 py-2 rounded-full border border-gray-200 bg-white hover:border-brand text-sm transition-colors">
+              <Link key={w.id} href={`/profile/${u.username}`} className="flex items-center gap-2 px-3 py-2 rounded-full bg-white shadow-sm hover:shadow-md text-sm font-semibold transition-all duration-200">
                 <Avatar src={u.avatarUrl} alt={u.username} fallback={u.username} size="sm" />
                 @{u.username}
               </Link>

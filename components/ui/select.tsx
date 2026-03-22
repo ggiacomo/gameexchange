@@ -33,9 +33,9 @@ function Select({
   const id = label?.toLowerCase().replace(/\s+/g, '-')
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1.5">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-gray-700">
+        <label htmlFor={id} className="text-sm font-semibold text-gray-800">
           {label}
         </label>
       )}
@@ -43,11 +43,11 @@ function Select({
         <RadixSelect.Trigger
           id={id}
           className={cn(
-            'flex h-10 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-3 text-sm',
+            'flex h-11 w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 text-sm',
             'focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent',
             'disabled:cursor-not-allowed disabled:opacity-50',
             'data-[placeholder]:text-gray-400',
-            error && 'border-red-500',
+            error && 'border-red-400',
             className
           )}
         >
@@ -57,13 +57,13 @@ function Select({
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
-          <RadixSelect.Content className="z-50 min-w-[8rem] rounded-lg border border-gray-200 bg-white shadow-lg">
-            <RadixSelect.Viewport className="p-1">
+          <RadixSelect.Content className="z-50 min-w-[8rem] rounded-xl border border-gray-100 bg-white shadow-xl">
+            <RadixSelect.Viewport className="p-1.5">
               {options.map((opt) => (
                 <RadixSelect.Item
                   key={opt.value}
                   value={opt.value}
-                  className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 focus:bg-gray-50 outline-none data-[highlighted]:bg-gray-50"
+                  className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 focus:bg-gray-50 outline-none data-[highlighted]:bg-gray-50"
                 >
                   <RadixSelect.ItemText>{opt.label}</RadixSelect.ItemText>
                   <RadixSelect.ItemIndicator>
@@ -75,7 +75,7 @@ function Select({
           </RadixSelect.Content>
         </RadixSelect.Portal>
       </RadixSelect.Root>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
     </div>
   )
 }

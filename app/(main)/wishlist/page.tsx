@@ -45,7 +45,7 @@ export default async function WishlistPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">My Wishlist</h1>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">My Wishlist</h1>
         <p className="text-sm text-gray-500 mt-0.5">
           {mapped.length}
           {profile?.plan === 'free' ? '/10' : ''} games

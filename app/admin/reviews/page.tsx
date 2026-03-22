@@ -62,7 +62,7 @@ export default async function AdminReviewsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Reviews</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Reviews</h1>
       <AdminReviewsClient reviews={mapped as (ReviewRow & { reviewer: UserRow; reviewee: UserRow })[]} />
     </div>
   )

@@ -49,7 +49,7 @@ function UpdatePasswordForm() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">New password</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-1">New password</h1>
       <p className="text-sm text-gray-500 mb-6">Choose a strong password for your account.</p>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input

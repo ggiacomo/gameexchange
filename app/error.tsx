@@ -19,7 +19,7 @@ export default function Error({
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center max-w-sm px-4">
         <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Something went wrong</h2>
+        <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-2">Something went wrong</h2>
         <p className="text-gray-500 text-sm mb-6">
           We ran into an unexpected error. Please try again.
         </p>

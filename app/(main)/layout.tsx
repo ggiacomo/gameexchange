@@ -77,14 +77,14 @@ export default async function MainLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f5f5]">
       <Navbar
         user={profileRow}
         unreadNotifications={unreadNotifications}
         unreadMessages={unreadMessages}
       />
       {!profile.emailConfirmed && <EmailConfirmationBanner />}
-      <main className="mx-auto max-w-[1280px] px-4 py-6">{children}</main>
+      <main className="mx-auto max-w-[1280px] px-4 py-8">{children}</main>
     </div>
   )
 }

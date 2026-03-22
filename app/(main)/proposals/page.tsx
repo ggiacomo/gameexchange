@@ -108,7 +108,7 @@ export default async function ProposalsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Proposals</h1>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">Proposals</h1>
       </div>
       <Tabs defaultValue="received">
         <TabsList>
@@ -147,11 +147,11 @@ function ProposalList({ proposals: props, type }: { proposals: ProposalWithDetai
         const days = daysUntil(proposal.expires_at)
         const isActive = ['pending', 'counter_proposed'].includes(proposal.status)
         return (
-          <Link key={proposal.id} href={`/proposals/${proposal.id}`} className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand hover:shadow-sm transition-all">
+          <Link key={proposal.id} href={`/proposals/${proposal.id}`} className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200">
             <Avatar src={otherUser?.avatar_url} alt={otherUser?.username} fallback={otherUser?.username} size="md" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-gray-900">@{otherUser?.username}</span>
+                <span className="text-sm font-bold text-[#1a1a1a]">@{otherUser?.username}</span>
                 <Badge variant={statusVariant[proposal.status] ?? 'default'}>{formatProposalStatus(proposal.status)}</Badge>
               </div>
               <p className="text-xs text-gray-500 mt-0.5 truncate">

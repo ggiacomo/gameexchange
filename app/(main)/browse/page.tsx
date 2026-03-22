@@ -58,49 +58,49 @@ export default async function BrowsePage({
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Browse games</h1>
-        <p className="text-gray-500">Find games available to swap near you</p>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-1">Browse games</h1>
+        <p className="text-gray-500 text-sm">Find games available to swap near you</p>
       </div>
 
-      <form className="flex flex-wrap gap-3 mb-6">
+      <form className="flex flex-wrap gap-2.5 mb-6">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <input name="q" defaultValue={params.q} placeholder="Search game title..." className="h-10 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <input name="q" defaultValue={params.q} placeholder="Search game title..." className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent shadow-sm" />
         </div>
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <select name="platform" defaultValue={params.platform ?? ''} className="h-10 appearance-none rounded-lg border border-gray-300 bg-white pl-9 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
+          <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+          <select name="platform" defaultValue={params.platform ?? ''} className="h-11 appearance-none rounded-xl border border-gray-200 bg-white pl-10 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent shadow-sm">
             <option value="">All platforms</option>
             {PLATFORMS.map((p) => (<option key={p} value={p}>{p}</option>))}
           </select>
         </div>
-        <input name="city" defaultValue={params.city} placeholder="City..." className="h-10 w-40 rounded-lg border border-gray-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" />
-        <button type="submit" className="h-10 px-4 rounded-lg bg-brand text-white text-sm font-medium hover:bg-brand-dark transition-colors">Search</button>
+        <input name="city" defaultValue={params.city} placeholder="City..." className="h-11 w-36 rounded-xl border border-gray-200 bg-white px-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent shadow-sm" />
+        <button type="submit" className="h-11 px-5 rounded-full bg-brand text-white text-sm font-semibold hover:bg-brand-dark transition-colors">Search</button>
         {(params.q || params.platform || params.city) && (
-          <Link href="/browse" className="h-10 px-4 rounded-lg border border-gray-300 text-gray-600 text-sm font-medium hover:bg-gray-50 transition-colors flex items-center">Reset</Link>
+          <Link href="/browse" className="h-11 px-5 rounded-full border-2 border-[#1a1a1a] text-[#1a1a1a] text-sm font-semibold hover:bg-[#1a1a1a] hover:text-white transition-all flex items-center">Reset</Link>
         )}
       </form>
 
       {items.length === 0 ? (
-        <div className="py-20 text-center">
-          <Gamepad2 className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-base font-semibold text-gray-900 mb-1">No games found</h3>
-          <p className="text-gray-500 text-sm">Try adjusting your filters</p>
+        <div className="py-24 text-center">
+          <Gamepad2 className="h-14 w-14 text-gray-200 mx-auto mb-4" />
+          <h3 className="text-base font-bold text-gray-900 mb-1">No games found</h3>
+          <p className="text-gray-400 text-sm">Try adjusting your filters</p>
         </div>
       ) : (
         <>
-          <p className="text-sm text-gray-500 mb-4">{items.length} games found</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+          <p className="text-sm text-gray-400 font-medium mb-4">{items.length} games available</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
             {items.map((item) => (
               <BrowseCard key={item.id} item={item} />
             ))}
           </div>
           <div className="flex justify-center gap-2">
             {page > 1 && (
-              <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page - 1) })}`} className="px-4 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-50">Previous</Link>
+              <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page - 1) })}`} className="px-5 py-2.5 rounded-full border-2 border-[#1a1a1a] text-sm font-semibold hover:bg-[#1a1a1a] hover:text-white transition-all">Previous</Link>
             )}
             {items.length === pageSize && (
-              <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page + 1) })}`} className="px-4 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-50">Next</Link>
+              <Link href={`/browse?${new URLSearchParams({ ...params, page: String(page + 1) })}`} className="px-5 py-2.5 rounded-full bg-[#1a1a1a] text-white text-sm font-semibold hover:bg-[#333] transition-colors">Next</Link>
             )}
           </div>
         </>
@@ -113,23 +113,22 @@ function BrowseCard({ item }: { item: LibraryItemWithGameAndUser }) {
   const game = item.games
   const owner = item.users
   return (
-    <Link href={`/games/${game.igdb_slug ?? game.id}`} className="group block rounded-xl overflow-hidden border border-gray-200 bg-white hover:border-brand hover:shadow-md transition-all">
+    <Link href={`/games/${game.igdb_slug ?? game.id}`} className="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-200">
       <div className="relative aspect-[3/4] bg-gray-100">
         {game.cover_url ? (
-          <Image src={game.cover_url} alt={game.title} fill className="object-cover group-hover:scale-105 transition-transform duration-200" sizes="(max-width: 640px) 50vw, 20vw" />
+          <Image src={game.cover_url} alt={game.title} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" sizes="(max-width: 640px) 50vw, 20vw" />
         ) : (
           <div className="flex h-full items-center justify-center"><Gamepad2 className="h-8 w-8 text-gray-300" /></div>
         )}
-        <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <Badge variant="default" className="text-[10px] bg-white/90 text-gray-900">{formatCondition(item.condition)}</Badge>
-        </div>
+        {item.status === 'with_compensation' && item.min_compensation && (
+          <div className="absolute top-2 left-2">
+            <span className="text-[10px] font-bold bg-brand text-white px-2 py-0.5 rounded-full">+€{item.min_compensation.toFixed(0)}</span>
+          </div>
+        )}
       </div>
       <div className="p-2.5">
-        <p className="text-xs font-semibold text-gray-900 leading-tight line-clamp-2 mb-1">{game.title}</p>
-        <p className="text-[11px] text-gray-500">@{owner.username} · {owner.city}</p>
-        {item.status === 'with_compensation' && item.min_compensation && (
-          <p className="text-[11px] text-brand font-medium mt-0.5">+ €{item.min_compensation.toFixed(0)}</p>
-        )}
+        <p className="text-xs font-bold text-[#1a1a1a] leading-tight line-clamp-2 mb-1">{game.title}</p>
+        <p className="text-[11px] text-gray-400">@{owner.username} · {owner.city}</p>
       </div>
     </Link>
   )

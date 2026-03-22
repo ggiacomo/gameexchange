@@ -27,7 +27,7 @@ export default async function SettingsPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Settings</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Settings</h1>
       <SettingsClient profile={profileRow} userEmail={authUserRow?.email ?? user.email ?? ''} />
     </div>
   )

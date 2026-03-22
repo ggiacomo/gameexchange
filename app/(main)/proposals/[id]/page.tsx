@@ -204,7 +204,7 @@ export default async function ProposalDetailPage({
       <div className="bg-white rounded-2xl border border-gray-200 p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-lg font-bold text-gray-900">Swap proposal</h1>
+            <h1 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight">Swap proposal</h1>
             <p className="text-sm text-gray-500">{formatDate(p.created_at)}</p>
           </div>
           <Badge variant={statusVariant[p.status] ?? 'default'}>

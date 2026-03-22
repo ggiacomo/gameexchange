@@ -29,22 +29,22 @@ export function EmailConfirmationBanner() {
   }
 
   return (
-    <div className="bg-yellow-50 border-b border-yellow-200">
+    <div className="bg-[#1a1a1a] border-b border-white/10">
       <div className="mx-auto max-w-[1280px] px-4 py-2.5 flex items-center gap-3">
-        <MailCheck className="h-4 w-4 text-yellow-600 flex-shrink-0" />
-        <p className="text-sm text-yellow-800 flex-1">
-          Please confirm your email address to send and accept swap proposals.{' '}
+        <MailCheck className="h-4 w-4 text-brand flex-shrink-0" />
+        <p className="text-sm text-white/80 flex-1">
+          Confirm your email to send and accept swap proposals.{' '}
           <button
             onClick={handleResend}
             disabled={sending}
-            className="underline font-medium hover:no-underline disabled:opacity-50"
+            className="text-white underline font-semibold hover:no-underline disabled:opacity-50"
           >
             {sending ? 'Sending...' : 'Resend confirmation email'}
           </button>
         </p>
         <button
           onClick={() => setDismissed(true)}
-          className="text-yellow-600 hover:text-yellow-800"
+          className="text-white/40 hover:text-white/80"
         >
           <X className="h-4 w-4" />
         </button>

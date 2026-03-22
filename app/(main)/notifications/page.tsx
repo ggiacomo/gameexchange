@@ -68,12 +68,12 @@ export default async function NotificationsPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Notifications</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Notifications</h1>
       {notifs.length === 0 ? (
         <div className="py-20 text-center">
-          <Bell className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-base font-semibold text-gray-900 mb-1">All caught up!</h3>
-          <p className="text-sm text-gray-500">No notifications yet.</p>
+          <Bell className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+          <h3 className="text-base font-bold text-[#1a1a1a] mb-1">All caught up!</h3>
+          <p className="text-sm text-gray-400">No notifications yet.</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -81,15 +81,15 @@ export default async function NotificationsPage() {
             <Link
               key={n.id}
               href={getLink(n)}
-              className={`flex items-start gap-3 p-4 rounded-xl border transition-colors ${
-                !n.read_at ? 'bg-green-50 border-green-200 hover:border-brand' : 'bg-white border-gray-200 hover:border-brand'
+              className={`flex items-start gap-3 p-4 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 ${
+                !n.read_at ? 'bg-brand/5' : 'bg-white'
               }`}
             >
-              <div className="h-8 w-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
+              <div className="h-8 w-8 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0">
                 {icons[n.type]}
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">{labels[n.type]}</p>
+                <p className="text-sm font-bold text-[#1a1a1a]">{labels[n.type]}</p>
                 {(n.payload as Record<string, string>).gameName && (
                   <p className="text-sm text-gray-500">{(n.payload as Record<string, string>).gameName}</p>
                 )}

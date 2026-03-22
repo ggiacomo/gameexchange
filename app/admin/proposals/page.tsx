@@ -45,7 +45,7 @@ export default async function AdminProposalsPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Proposals</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Proposals</h1>
 
       {/* Status filters */}
       <div className="flex flex-wrap gap-2 mb-6">

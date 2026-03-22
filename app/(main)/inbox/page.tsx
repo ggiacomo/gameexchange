@@ -30,11 +30,11 @@ export default async function InboxPage() {
   if (!proposalRows.length) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Inbox</h1>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Inbox</h1>
         <div className="py-20 text-center">
-          <Inbox className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-base font-semibold text-gray-900 mb-1">No conversations yet</h3>
-          <p className="text-sm text-gray-500">Accepted proposals create a chat thread.</p>
+          <Inbox className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+          <h3 className="text-base font-bold text-[#1a1a1a] mb-1">No conversations yet</h3>
+          <p className="text-sm text-gray-400">Accepted proposals create a chat thread.</p>
         </div>
       </div>
     )
@@ -82,7 +82,7 @@ export default async function InboxPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Inbox</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Inbox</h1>
       <div className="space-y-2">
         {proposalRows.map((p) => {
           const otherUserId = p.proposerId === user.id ? p.receiverId : p.proposerId
@@ -95,7 +95,7 @@ export default async function InboxPage() {
             <Link
               key={p.id}
               href={`/inbox/${p.id}`}
-              className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand hover:shadow-sm transition-all"
+              className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200"
             >
               <div className="relative">
                 <Avatar src={otherUser?.avatarUrl} alt={otherUser?.username} fallback={otherUser?.username} size="md" />
@@ -107,7 +107,7 @@ export default async function InboxPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className={`text-sm ${unread > 0 ? 'font-semibold text-gray-900' : 'font-medium text-gray-700'}`}>
+                  <span className={`text-sm ${unread > 0 ? 'font-bold text-[#1a1a1a]' : 'font-semibold text-gray-700'}`}>
                     @{otherUser?.username}
                   </span>
                   {p.status === 'completed' && <Badge variant="success" className="text-[10px]">Completed</Badge>}

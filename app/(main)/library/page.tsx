@@ -50,7 +50,7 @@ export default async function LibraryPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">My Library</h1>
+          <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">My Library</h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {mapped.length}
             {profile?.plan === 'free' ? '/50' : ''} games

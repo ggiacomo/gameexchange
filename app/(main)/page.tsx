@@ -76,9 +76,9 @@ export default async function HomePage({
   return (
     <div className="space-y-10">
       {params.welcome === '1' && (
-        <div className="rounded-2xl bg-gradient-to-r from-brand to-brand-light p-6 text-white">
-          <h2 className="text-xl font-bold mb-1">Welcome to Gamexchange!</h2>
-          <p className="text-green-100">
+        <div className="rounded-2xl bg-[#1a1a1a] p-6 text-white">
+          <h2 className="text-xl font-extrabold mb-1 tracking-tight">Welcome to Gamexchange!</h2>
+          <p className="text-white/70 text-sm">
             {wishlistMatches.length > 0
               ? `We found ${wishlistMatches.length} game${wishlistMatches.length > 1 ? 's' : ''} from your wishlist available to swap!`
               : "Start by adding games to your library or browse what's available near you."}
@@ -89,8 +89,8 @@ export default async function HomePage({
       {wishlistMatches.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">From your wishlist</h2>
-            <Link href="/wishlist" className="text-sm text-brand hover:underline flex items-center gap-1">
+            <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight">From your wishlist</h2>
+            <Link href="/wishlist" className="text-sm text-brand font-semibold hover:underline flex items-center gap-1">
               View wishlist <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
@@ -100,17 +100,17 @@ export default async function HomePage({
 
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Recently available</h2>
-          <Link href="/browse" className="text-sm text-brand hover:underline flex items-center gap-1">
+          <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight">Recently available</h2>
+          <Link href="/browse" className="text-sm text-brand font-semibold hover:underline flex items-center gap-1">
             Browse all <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
         {recentGames.length > 0 ? (
           <GameGrid items={recentGames} currentUserId={user.id} />
         ) : (
-          <div className="rounded-2xl border border-dashed border-gray-300 p-12 text-center">
-            <Gamepad2 className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500">No games available yet.</p>
+          <div className="rounded-2xl bg-white shadow-sm p-12 text-center">
+            <Gamepad2 className="h-10 w-10 text-gray-200 mx-auto mb-3" />
+            <p className="text-gray-400 text-sm">No games available yet.</p>
             <Link href="/library">
               <Button className="mt-4" size="sm">Add your games</Button>
             </Link>
@@ -137,26 +137,25 @@ function GameCard({ item }: { item: LibraryItemWithGameAndUser }) {
   return (
     <Link
       href={`/games/${game.igdb_slug ?? game.id}`}
-      className="group block rounded-xl overflow-hidden border border-gray-200 bg-white hover:border-brand hover:shadow-md transition-all"
+      className="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-200"
     >
       <div className="relative aspect-[3/4] bg-gray-100">
         {game.cover_url ? (
-          <Image src={game.cover_url} alt={game.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 16vw" />
+          <Image src={game.cover_url} alt={game.title} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 16vw" />
         ) : (
           <div className="flex h-full items-center justify-center">
             <Gamepad2 className="h-8 w-8 text-gray-300" />
           </div>
         )}
-        {item.status === 'with_compensation' && (
-          <div className="absolute top-2 right-2">
-            <Badge variant="warning" className="text-[10px]">+ €</Badge>
+        {item.status === 'with_compensation' && item.min_compensation && (
+          <div className="absolute top-2 left-2">
+            <span className="text-[10px] font-bold bg-brand text-white px-2 py-0.5 rounded-full">+€{item.min_compensation.toFixed(0)}</span>
           </div>
         )}
       </div>
       <div className="p-2.5">
-        <p className="text-xs font-medium text-gray-900 leading-tight line-clamp-2 mb-1">{game.title}</p>
-        <p className="text-[11px] text-gray-500 truncate">@{owner.username}</p>
-        <p className="text-[11px] text-gray-400 truncate">{owner.city}</p>
+        <p className="text-xs font-bold text-[#1a1a1a] leading-tight line-clamp-2 mb-1">{game.title}</p>
+        <p className="text-[11px] text-gray-400">@{owner.username} · {owner.city}</p>
       </div>
     </Link>
   )

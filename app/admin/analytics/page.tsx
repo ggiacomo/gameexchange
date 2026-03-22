@@ -30,11 +30,11 @@ export default async function AdminAnalyticsPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">Analytics</h1>
 
       {/* Proposal funnel */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Proposal funnel</h2>
+        <h2 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight mb-4">Proposal funnel</h2>
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
@@ -66,7 +66,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* Top cities */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Top cities</h2>
+        <h2 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight mb-4">Top cities</h2>
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
