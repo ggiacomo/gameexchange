@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Gamepad2 } from 'lucide-react'
 import type { LibraryItemWithGameAndUser } from '@/types/database'
+import { CitySelect } from '@/components/ui/city-select'
 
 export const metadata = { title: 'Gamexchange — Scambia i tuoi videogiochi' }
 
@@ -173,24 +174,7 @@ export default async function BrowsePage({
           {cities.length > 0 && <div className="w-px h-6 bg-gray-300 mx-1" />}
 
           {/* Dropdown città */}
-          {cities.length > 0 && (
-            <form method="GET" action="/browse">
-              {params.platform && <input type="hidden" name="platform" value={params.platform} />}
-              {params.q && <input type="hidden" name="q" value={params.q} />}
-              <select
-                name="city"
-                defaultValue={params.city ?? ''}
-                onChange={(e) => (e.target.form as HTMLFormElement).submit()}
-                className="h-9 px-3 pr-8 rounded-full text-sm font-semibold bg-white shadow-sm border-none focus:outline-none focus:ring-2 focus:ring-brand appearance-none cursor-pointer text-gray-600"
-                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%239ca3af\' stroke-width=\'2\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
-              >
-                <option value="">📍 Tutte le città</option>
-                {cities.map((city) => (
-                  <option key={city} value={city}>{city}</option>
-                ))}
-              </select>
-            </form>
-          )}
+          <CitySelect cities={cities} currentCity={params.city} currentPlatform={params.platform} currentQ={params.q} />
 
           {hasFilters && (
             <Link href="/browse" className="px-4 py-2 rounded-full text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
