@@ -52,6 +52,82 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         </div>
       </header>
       <main>{children}</main>
+
+      {/* Footer */}
+      <footer className="bg-[#1a1a1a] mt-16">
+        <div className="mx-auto max-w-[1280px] px-4 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+            {/* Brand */}
+            <div className="col-span-2 md:col-span-1">
+              <Link href="/" className="flex items-center gap-2 mb-4">
+                <div className="h-8 w-8 rounded-lg bg-brand flex items-center justify-center">
+                  <Gamepad2 className="h-4 w-4 text-white" />
+                </div>
+                <span className="font-extrabold text-white tracking-tight">Gamexchange</span>
+              </Link>
+              <p className="text-sm text-white/40 leading-relaxed">
+                La piattaforma italiana per scambiare videogiochi fisici tra appassionati.
+              </p>
+            </div>
+
+            {/* Scopri */}
+            <div>
+              <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest mb-4">Scopri</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { label: 'Sfoglia i giochi', href: '/browse' },
+                  { label: 'Come funziona', href: '#' },
+                  { label: 'Tutte le piattaforme', href: '/browse' },
+                  { label: 'Giochi recenti', href: '/browse' },
+                ].map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-sm text-white/50 hover:text-white transition-colors">{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Account */}
+            <div>
+              <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest mb-4">Account</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { label: 'Registrati', href: '/register' },
+                  { label: 'Accedi', href: '/login' },
+                  { label: 'La mia libreria', href: '/library' },
+                  { label: 'Le mie proposte', href: '/proposals' },
+                ].map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-sm text-white/50 hover:text-white transition-colors">{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Supporto */}
+            <div>
+              <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest mb-4">Supporto</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { label: 'Centro assistenza', href: '#' },
+                  { label: 'Segnala un problema', href: '#' },
+                  { label: 'Privacy policy', href: '#' },
+                  { label: 'Termini di servizio', href: '#' },
+                ].map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-sm text-white/50 hover:text-white transition-colors">{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-white/30">© 2025 Gamexchange. Tutti i diritti riservati.</p>
+            <p className="text-xs text-white/20">Fatto con ❤️ in Italia</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
