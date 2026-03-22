@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth/client'
@@ -18,7 +17,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function LoginForm() {
-  const router = useRouter()
   const { toast } = useToast()
   const {
     register,
@@ -37,8 +35,7 @@ export function LoginForm() {
       return
     }
 
-    router.push('/')
-    router.refresh()
+    window.location.href = '/feed'
   }
 
   const handleGoogle = async () => {

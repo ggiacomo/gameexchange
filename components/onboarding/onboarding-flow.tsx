@@ -37,11 +37,11 @@ export function OnboardingFlow({ hasProfile }: OnboardingFlowProps) {
   const handleComplete = async () => {
     await saveLibraryItems(libraryGames.map((g) => g.id))
     await saveWishlistItems(wishlistGames.map((g) => g.id))
-    router.push('/feed?welcome=1')
+    window.location.href = '/feed?welcome=1'
   }
 
   const handleSkipAll = () => {
-    router.push('/feed')
+    window.location.href = '/feed'
   }
 
   return (

@@ -86,7 +86,7 @@ export function RegisterForm() {
       return
     }
 
-    router.push('/onboarding')
+    window.location.href = '/onboarding'
   }
 
   const handleGoogle = async () => {
