@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm'
 import { LibraryClient } from '@/components/library/library-client'
 import type { LibraryItemWithGame } from '@/types/database'
 
-export const metadata = { title: 'My Library — Gamexchange' }
+export const metadata = { title: 'La mia libreria — Gamexchange' }
 
 export default async function LibraryPage() {
   const user = await getCurrentUser()
@@ -50,10 +50,10 @@ export default async function LibraryPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">My Library</h1>
+          <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">La mia libreria</h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {mapped.length}
-            {profile?.plan === 'free' ? '/50' : ''} games
+            {profile?.plan === 'free' ? '/50' : ''} giochi
           </p>
         </div>
       </div>

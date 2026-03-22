@@ -12,11 +12,11 @@ import { useToast } from '@/components/ui/toast'
 
 const schema = z
   .object({
-    password: z.string().min(8, 'Minimum 8 characters'),
+    password: z.string().min(8, 'Minimo 8 caratteri'),
     confirm: z.string(),
   })
   .refine((d) => d.password === d.confirm, {
-    message: "Passwords don't match",
+    message: 'Le password non coincidono',
     path: ['confirm'],
   })
 
@@ -35,39 +35,39 @@ function UpdatePasswordForm() {
   const onSubmit = async (data: FormData) => {
     const token = searchParams.get('token')
     if (!token) {
-      toast({ title: 'Invalid reset link', variant: 'destructive' })
+      toast({ title: 'Link di reset non valido', variant: 'destructive' })
       return
     }
     const { error } = await authClient.resetPassword({ newPassword: data.password, token })
     if (error) {
-      toast({ title: error.message ?? 'Failed to update password', variant: 'destructive' })
+      toast({ title: error.message ?? 'Aggiornamento password fallito', variant: 'destructive' })
       return
     }
-    toast({ title: 'Password updated!', variant: 'success' })
+    toast({ title: 'Password aggiornata!', variant: 'success' })
     router.push('/login')
   }
 
   return (
     <>
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-1">New password</h1>
-      <p className="text-sm text-gray-500 mb-6">Choose a strong password for your account.</p>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-1">Nuova password</h1>
+      <p className="text-sm text-gray-500 mb-6">Scegli una password sicura per il tuo account.</p>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input
-          label="New password"
+          label="Nuova password"
           type="password"
-          placeholder="At least 8 characters"
+          placeholder="Almeno 8 caratteri"
           error={errors.password?.message}
           {...register('password')}
         />
         <Input
-          label="Confirm password"
+          label="Conferma password"
           type="password"
-          placeholder="Repeat your password"
+          placeholder="Ripeti la password"
           error={errors.confirm?.message}
           {...register('confirm')}
         />
         <Button type="submit" size="lg" className="w-full" isLoading={isSubmitting}>
-          Update password
+          Aggiorna password
         </Button>
       </form>
     </>

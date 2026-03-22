@@ -8,7 +8,7 @@ import { Bell, ArrowLeftRight, MessageSquare, Star, Heart, CheckCircle } from 'l
 import { formatRelativeDate } from '@/lib/utils/format'
 import type { NotificationRow, NotificationType } from '@/types/database'
 
-export const metadata = { title: 'Notifications — Gamexchange' }
+export const metadata = { title: 'Notifiche — Gamexchange' }
 
 const icons: Record<NotificationType, React.ReactNode> = {
   proposal_received: <ArrowLeftRight className="h-4 w-4 text-brand" />,
@@ -22,14 +22,14 @@ const icons: Record<NotificationType, React.ReactNode> = {
 }
 
 const labels: Record<NotificationType, string> = {
-  proposal_received: 'New swap proposal',
-  proposal_accepted: 'Proposal accepted',
-  proposal_declined: 'Proposal declined',
-  counter_received: 'Counter-proposal received',
-  message_received: 'New message',
-  swap_completed: 'Swap completed',
-  review_received: 'New review',
-  wishlist_match: 'Wishlist match',
+  proposal_received: 'Nuova proposta di scambio',
+  proposal_accepted: 'Proposta accettata',
+  proposal_declined: 'Proposta rifiutata',
+  counter_received: 'Controproposta ricevuta',
+  message_received: 'Nuovo messaggio',
+  swap_completed: 'Scambio completato',
+  review_received: 'Nuova recensione',
+  wishlist_match: 'Match nella wishlist',
 }
 
 function getLink(n: NotificationRow): string {
@@ -68,12 +68,12 @@ export default async function NotificationsPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Notifications</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Notifiche</h1>
       {notifs.length === 0 ? (
         <div className="py-20 text-center">
           <Bell className="h-12 w-12 text-gray-200 mx-auto mb-4" />
-          <h3 className="text-base font-bold text-[#1a1a1a] mb-1">All caught up!</h3>
-          <p className="text-sm text-gray-400">No notifications yet.</p>
+          <h3 className="text-base font-bold text-[#1a1a1a] mb-1">Tutto in ordine!</h3>
+          <p className="text-sm text-gray-400">Nessuna notifica ancora.</p>
         </div>
       ) : (
         <div className="space-y-2">

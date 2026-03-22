@@ -7,10 +7,10 @@ import Link from 'next/link'
 import { LayoutDashboard, Users, ArrowLeftRight, Star, BarChart2, Gamepad2 } from 'lucide-react'
 
 const navItems = [
-  { href: '/admin', label: 'Overview', icon: LayoutDashboard },
-  { href: '/admin/users', label: 'Users', icon: Users },
-  { href: '/admin/proposals', label: 'Proposals', icon: ArrowLeftRight },
-  { href: '/admin/reviews', label: 'Reviews', icon: Star },
+  { href: '/admin', label: 'Panoramica', icon: LayoutDashboard },
+  { href: '/admin/users', label: 'Utenti', icon: Users },
+  { href: '/admin/proposals', label: 'Proposte', icon: ArrowLeftRight },
+  { href: '/admin/reviews', label: 'Recensioni', icon: Star },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart2 },
 ]
 
@@ -32,7 +32,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </div>
             <span className="font-extrabold text-white tracking-tight">Gamexchange</span>
           </Link>
-          <p className="text-xs text-white/40 mt-0.5 pl-9">Admin panel</p>
+          <p className="text-xs text-white/40 mt-0.5 pl-9">Pannello admin</p>
         </div>
         <nav className="p-2">
           {navItems.map((item) => {

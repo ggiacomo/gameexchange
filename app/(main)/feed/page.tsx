@@ -77,11 +77,11 @@ export default async function HomePage({
     <div className="space-y-10">
       {params.welcome === '1' && (
         <div className="rounded-2xl bg-[#1a1a1a] p-6 text-white">
-          <h2 className="text-xl font-extrabold mb-1 tracking-tight">Welcome to Gamexchange!</h2>
+          <h2 className="text-xl font-extrabold mb-1 tracking-tight">Benvenuto su Gamexchange!</h2>
           <p className="text-white/70 text-sm">
             {wishlistMatches.length > 0
-              ? `We found ${wishlistMatches.length} game${wishlistMatches.length > 1 ? 's' : ''} from your wishlist available to swap!`
-              : "Start by adding games to your library or browse what's available near you."}
+              ? `Abbiamo trovato ${wishlistMatches.length} gioch${wishlistMatches.length > 1 ? 'i' : 'o'} dalla tua wishlist disponibili per lo scambio!`
+              : 'Inizia aggiungendo giochi alla tua libreria o sfoglia quelli disponibili vicino a te.'}
           </p>
         </div>
       )}
@@ -89,9 +89,9 @@ export default async function HomePage({
       {wishlistMatches.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight">From your wishlist</h2>
+            <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight">Dalla tua wishlist</h2>
             <Link href="/wishlist" className="text-sm text-brand font-semibold hover:underline flex items-center gap-1">
-              View wishlist <ArrowRight className="h-3 w-3" />
+              Vai alla wishlist <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
           <GameGrid items={wishlistMatches} currentUserId={user.id} />
@@ -100,9 +100,9 @@ export default async function HomePage({
 
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight">Recently available</h2>
+          <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight">Disponibili di recente</h2>
           <Link href="/browse" className="text-sm text-brand font-semibold hover:underline flex items-center gap-1">
-            Browse all <ArrowRight className="h-3 w-3" />
+            Vedi tutti <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
         {recentGames.length > 0 ? (
@@ -110,9 +110,9 @@ export default async function HomePage({
         ) : (
           <div className="rounded-2xl bg-white shadow-sm p-12 text-center">
             <Gamepad2 className="h-10 w-10 text-gray-200 mx-auto mb-3" />
-            <p className="text-gray-400 text-sm">No games available yet.</p>
+            <p className="text-gray-400 text-sm">Nessun gioco disponibile ancora.</p>
             <Link href="/library">
-              <Button className="mt-4" size="sm">Add your games</Button>
+              <Button className="mt-4" size="sm">Aggiungi i tuoi giochi</Button>
             </Link>
           </div>
         )}

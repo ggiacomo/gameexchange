@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm'
 import { WishlistClient } from '@/components/library/wishlist-client'
 import type { WishlistItemWithGame } from '@/types/database'
 
-export const metadata = { title: 'My Wishlist — Gamexchange' }
+export const metadata = { title: 'La mia wishlist — Gamexchange' }
 
 export default async function WishlistPage() {
   const user = await getCurrentUser()
@@ -45,10 +45,10 @@ export default async function WishlistPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">My Wishlist</h1>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">La mia wishlist</h1>
         <p className="text-sm text-gray-500 mt-0.5">
           {mapped.length}
-          {profile?.plan === 'free' ? '/10' : ''} games
+          {profile?.plan === 'free' ? '/10' : ''} giochi
         </p>
       </div>
       <WishlistClient items={mapped} plan={profile?.plan ?? 'free'} />

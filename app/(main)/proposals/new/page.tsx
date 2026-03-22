@@ -6,7 +6,7 @@ import { db } from '@/lib/db'
 import { users, userLibrary, games } from '@/lib/db/schema'
 import type { LibraryItemWithGame, UserRow } from '@/types/database'
 
-export const metadata = { title: 'New Proposal — Gamexchange' }
+export const metadata = { title: 'Nuova proposta — Gamexchange' }
 
 export default async function NewProposalPage({
   searchParams,
@@ -93,7 +93,7 @@ export default async function NewProposalPage({
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Propose a swap</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Proponi uno scambio</h1>
       <NewProposalClient
         requestedItem={mapItem(requestedRow)}
         receiver={receiver}

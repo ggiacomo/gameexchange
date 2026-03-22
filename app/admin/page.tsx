@@ -45,15 +45,15 @@ export default async function AdminOverviewPage() {
   const kpis = await getKPIs()
   return (
     <div>
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Overview</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Panoramica</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <KPICard label="Total users" value={kpis.totalUsers} />
-        <KPICard label="Active (7d)" value={kpis.active7d} />
-        <KPICard label="Active (30d)" value={kpis.active30d} />
-        <KPICard label="Total proposals" value={kpis.totalProposals} />
-        <KPICard label="Active proposals" value={kpis.activeProposals} />
-        <KPICard label="Swaps completed" value={kpis.completedSwaps} />
-        <KPICard label="Conversion rate" value={`${kpis.conversionRate}%`} sub="proposals → completed" />
+        <KPICard label="Utenti totali" value={kpis.totalUsers} />
+        <KPICard label="Attivi (7g)" value={kpis.active7d} />
+        <KPICard label="Attivi (30g)" value={kpis.active30d} />
+        <KPICard label="Proposte totali" value={kpis.totalProposals} />
+        <KPICard label="Proposte attive" value={kpis.activeProposals} />
+        <KPICard label="Scambi completati" value={kpis.completedSwaps} />
+        <KPICard label="Tasso conversione" value={`${kpis.conversionRate}%`} sub="proposte → completate" />
       </div>
     </div>
   )

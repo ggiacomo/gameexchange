@@ -204,7 +204,7 @@ export default async function ProposalDetailPage({
       <div className="bg-white rounded-2xl border border-gray-200 p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight">Swap proposal</h1>
+            <h1 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight">Proposta di scambio</h1>
             <p className="text-sm text-gray-500">{formatDate(p.created_at)}</p>
           </div>
           <Badge variant={statusVariant[p.status] ?? 'default'}>
@@ -215,7 +215,7 @@ export default async function ProposalDetailPage({
           <Link href={`/profile/${p.proposer.username}`}>
             <Avatar src={p.proposer.avatar_url} alt={p.proposer.username} fallback={p.proposer.username} size="md" />
           </Link>
-          <div className="text-sm text-gray-500">proposes to</div>
+          <div className="text-sm text-gray-500">propone a</div>
           <Link href={`/profile/${p.receiver.username}`}>
             <Avatar src={p.receiver.avatar_url} alt={p.receiver.username} fallback={p.receiver.username} size="md" />
           </Link>
@@ -227,7 +227,7 @@ export default async function ProposalDetailPage({
         </div>
         {['pending', 'counter_proposed'].includes(p.status) && (
           <p className="text-xs text-gray-500 mt-3">
-            Expires in {daysUntil(p.expires_at)} day{daysUntil(p.expires_at) !== 1 ? 's' : ''}
+            Scade in {daysUntil(p.expires_at)} giorn{daysUntil(p.expires_at) !== 1 ? 'i' : 'o'}
           </p>
         )}
       </div>
@@ -235,7 +235,7 @@ export default async function ProposalDetailPage({
       {/* Requested item */}
       <div className="bg-white rounded-2xl border border-gray-200 p-5">
         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-          @{p.proposer.username} wants
+          @{p.proposer.username} vuole
         </h2>
         <GameItemCard item={p.requested_item} />
       </div>
@@ -244,7 +244,7 @@ export default async function ProposalDetailPage({
       {proposerItemsList.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-            @{p.proposer.username} offers
+            @{p.proposer.username} offre
           </h2>
           <div className="space-y-2">
             {proposerItemsList.map((pi) => (
@@ -258,7 +258,7 @@ export default async function ProposalDetailPage({
       {receiverItemsList.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-            @{p.receiver.username} counter-offers
+            @{p.receiver.username} contropropone
           </h2>
           <div className="space-y-2">
             {receiverItemsList.map((pi) => (
@@ -271,7 +271,7 @@ export default async function ProposalDetailPage({
       {/* Message */}
       {p.message && (
         <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Message</h2>
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Messaggio</h2>
           <p className="text-sm text-gray-700 italic">&ldquo;{p.message}&rdquo;</p>
         </div>
       )}
@@ -297,7 +297,7 @@ export default async function ProposalDetailPage({
       {p.status === 'accepted' && (
         <Link href={`/inbox/${id}`}>
           <div className="bg-brand text-white rounded-2xl p-4 text-center hover:bg-brand-dark transition-colors">
-            <p className="font-medium">Chat with @{otherUser.username} →</p>
+            <p className="font-medium">Chatta con @{otherUser.username} →</p>
           </div>
         </Link>
       )}

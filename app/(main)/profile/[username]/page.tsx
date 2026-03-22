@@ -28,8 +28,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
   if (profile.isSuspended) {
     return (
       <div className="max-w-lg mx-auto py-20 text-center">
-        <h1 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-2">Account suspended</h1>
-        <p className="text-gray-500">This user&apos;s account has been suspended.</p>
+        <h1 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-2">Account sospeso</h1>
+        <p className="text-gray-500">L&apos;account di questo utente è stato sospeso.</p>
       </div>
     )
   }
@@ -92,32 +92,32 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                 <span className="text-sm font-bold text-[#1a1a1a]">{Number(profile.ratingAvg).toFixed(1)}</span>
-                <span className="text-sm text-gray-400">({reviewRows.length} reviews)</span>
+                <span className="text-sm text-gray-400">({reviewRows.length} recensioni)</span>
               </div>
               <div className="text-sm text-gray-400">
-                <span className="font-bold text-[#1a1a1a]">{profile.swapsCompleted}</span> swaps completed
+                <span className="font-bold text-[#1a1a1a]">{profile.swapsCompleted}</span> scambi completati
               </div>
             </div>
           </div>
           {!isOwnProfile && (
             <Link href={`/browse?city=${profile.city}`}>
-              <Button variant="outline" size="sm">Browse their city</Button>
+              <Button variant="outline" size="sm">Sfoglia la sua città</Button>
             </Link>
           )}
           {isOwnProfile && (
-            <Link href="/settings"><Button variant="outline" size="sm">Edit profile</Button></Link>
+            <Link href="/settings"><Button variant="outline" size="sm">Modifica profilo</Button></Link>
           )}
         </div>
       </div>
 
       <Tabs defaultValue="games">
         <TabsList>
-          <TabsTrigger value="games">Available games ({library.length})</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews ({reviewRows.length})</TabsTrigger>
+          <TabsTrigger value="games">Giochi disponibili ({library.length})</TabsTrigger>
+          <TabsTrigger value="reviews">Recensioni ({reviewRows.length})</TabsTrigger>
         </TabsList>
         <TabsContent value="games">
           {!library.length ? (
-            <div className="py-12 text-center text-gray-500">No games available for swap right now.</div>
+            <div className="py-12 text-center text-gray-500">Nessun gioco disponibile per lo scambio al momento.</div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {library.map((item) => {
@@ -143,7 +143,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                       </div>
                       {!isOwnProfile && (
                         <Link href={`/proposals/new?libraryItemId=${item.id}&receiverId=${profile.id}`} className="mt-2 flex items-center gap-1 text-[11px] text-brand font-medium hover:underline" onClick={(e) => e.stopPropagation()}>
-                          Propose swap <ArrowRight className="h-3 w-3" />
+                          Proponi scambio <ArrowRight className="h-3 w-3" />
                         </Link>
                       )}
                     </div>
@@ -155,7 +155,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
         </TabsContent>
         <TabsContent value="reviews">
           {!reviewRows.length ? (
-            <div className="py-12 text-center text-gray-500">No reviews yet.</div>
+            <div className="py-12 text-center text-gray-500">Nessuna recensione ancora.</div>
           ) : (
             <div className="space-y-4">
               {reviewRows.map(({ review: r, reviewer: rev }) => (

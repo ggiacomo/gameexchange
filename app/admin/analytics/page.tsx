@@ -34,13 +34,13 @@ export default async function AdminAnalyticsPage() {
 
       {/* Proposal funnel */}
       <div>
-        <h2 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight mb-4">Proposal funnel</h2>
+        <h2 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight mb-4">Funnel proposte</h2>
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Count</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Stato</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Quantità</th>
                 <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">%</th>
               </tr>
             </thead>
@@ -55,7 +55,7 @@ export default async function AdminAnalyticsPage() {
                 </tr>
               ))}
               <tr className="bg-gray-50 font-semibold">
-                <td className="px-4 py-3">Total</td>
+                <td className="px-4 py-3">Totale</td>
                 <td className="px-4 py-3 text-right">{total}</td>
                 <td className="px-4 py-3 text-right">100%</td>
               </tr>
@@ -66,14 +66,14 @@ export default async function AdminAnalyticsPage() {
 
       {/* Top cities */}
       <div>
-        <h2 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight mb-4">Top cities</h2>
+        <h2 className="text-lg font-extrabold text-[#1a1a1a] tracking-tight mb-4">Città principali</h2>
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">#</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">City</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Users</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Città</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Utenti</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

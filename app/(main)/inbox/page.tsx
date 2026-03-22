@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Inbox } from 'lucide-react'
 import { formatRelativeDate } from '@/lib/utils/format'
 
-export const metadata = { title: 'Inbox — Gamexchange' }
+export const metadata = { title: 'Messaggi — Gamexchange' }
 
 export default async function InboxPage() {
   const user = await getCurrentUser()
@@ -30,11 +30,11 @@ export default async function InboxPage() {
   if (!proposalRows.length) {
     return (
       <div>
-        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Inbox</h1>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Messaggi</h1>
         <div className="py-20 text-center">
           <Inbox className="h-12 w-12 text-gray-200 mx-auto mb-4" />
-          <h3 className="text-base font-bold text-[#1a1a1a] mb-1">No conversations yet</h3>
-          <p className="text-sm text-gray-400">Accepted proposals create a chat thread.</p>
+          <h3 className="text-base font-bold text-[#1a1a1a] mb-1">Nessuna conversazione</h3>
+          <p className="text-sm text-gray-400">Le proposte accettate aprono una chat.</p>
         </div>
       </div>
     )
@@ -82,7 +82,7 @@ export default async function InboxPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Inbox</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Messaggi</h1>
       <div className="space-y-2">
         {proposalRows.map((p) => {
           const otherUserId = p.proposerId === user.id ? p.receiverId : p.proposerId
@@ -110,7 +110,7 @@ export default async function InboxPage() {
                   <span className={`text-sm ${unread > 0 ? 'font-bold text-[#1a1a1a]' : 'font-semibold text-gray-700'}`}>
                     @{otherUser?.username}
                   </span>
-                  {p.status === 'completed' && <Badge variant="success" className="text-[10px]">Completed</Badge>}
+                  {p.status === 'completed' && <Badge variant="success" className="text-[10px]">Completato</Badge>}
                 </div>
                 <p className="text-xs text-gray-500 truncate">{game?.title}</p>
                 {lastMsg && (

@@ -21,10 +21,10 @@ export default async function ConfirmPage() {
   return (
     <div className="text-center">
       <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-      <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-2">Email confirmed!</h2>
-      <p className="text-gray-500 mb-6">Your email address has been verified.</p>
+      <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-2">Email confermata!</h2>
+      <p className="text-gray-500 mb-6">Il tuo indirizzo email è stato verificato.</p>
       <Link href="/" className="text-brand hover:underline text-sm">
-        Go to the app →
+        Vai all&apos;app →
       </Link>
     </div>
   )

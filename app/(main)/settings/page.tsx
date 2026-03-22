@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm'
 import { SettingsClient } from '@/components/settings/settings-client'
 import type { UserRow } from '@/types/database'
 
-export const metadata = { title: 'Settings — Gamexchange' }
+export const metadata = { title: 'Impostazioni — Gamexchange' }
 
 export default async function SettingsPage() {
   const user = await getCurrentUser()
@@ -27,7 +27,7 @@ export default async function SettingsPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Settings</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Impostazioni</h1>
       <SettingsClient profile={profileRow} userEmail={authUserRow?.email ?? user.email ?? ''} />
     </div>
   )

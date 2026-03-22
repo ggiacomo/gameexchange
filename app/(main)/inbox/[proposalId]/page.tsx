@@ -88,8 +88,8 @@ export default async function ConversationPage({
           </Link>
           <p className="text-xs text-gray-500">{li?.games.title}</p>
         </div>
-        {isReadOnly && <Badge variant="default">Read-only</Badge>}
-        <Link href={`/proposals/${proposalId}`} className="text-xs text-brand hover:underline">View proposal</Link>
+        {isReadOnly && <Badge variant="default">Sola lettura</Badge>}
+        <Link href={`/proposals/${proposalId}`} className="text-xs text-brand hover:underline">Vedi proposta</Link>
       </div>
       <ChatClient
         proposalId={proposalId}

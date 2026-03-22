@@ -14,10 +14,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </Link>
         <div>
           <p className="text-3xl font-extrabold text-white leading-snug mb-3">
-            Swap physical games<br />with people nearby.
+            Scambia videogiochi fisici<br />con persone vicino a te.
           </p>
           <p className="text-white/50 text-sm">
-            Build your library, browse others, propose swaps — no money needed.
+            Crea la tua libreria, sfoglia gli altri, proponi scambi — senza soldi.
           </p>
         </div>
         <p className="text-white/25 text-xs">© 2025 Gamexchange</p>

@@ -82,11 +82,11 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
       </div>
 
       <section className="mb-10">
-        <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-4">Available to swap ({listings.length})</h2>
+        <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-4">Disponibile per lo scambio ({listings.length})</h2>
         {!listings.length ? (
           <div className="rounded-2xl bg-white shadow-sm py-10 text-center">
-            <p className="text-gray-400 text-sm">No one is swapping this game right now.</p>
-            <Link href={currentUser ? '/wishlist' : '/login'}><Button variant="outline" size="sm" className="mt-3">Add to wishlist</Button></Link>
+            <p className="text-gray-400 text-sm">Nessuno sta scambiando questo gioco al momento.</p>
+            <Link href={currentUser ? '/wishlist' : '/login'}><Button variant="outline" size="sm" className="mt-3">Aggiungi alla wishlist</Button></Link>
           </div>
         ) : (
           <div className="space-y-3">
@@ -103,12 +103,12 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
                     <div className="flex items-center gap-1 mt-0.5">
                       <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                       <span className="text-xs text-gray-500">{owner.rating_avg.toFixed(1)}</span>
-                      <span className="text-xs text-gray-400">({owner.swaps_completed} swaps)</span>
+                      <span className="text-xs text-gray-400">({owner.swaps_completed} scambi)</span>
                     </div>
                   </div>
                   {item.notes && <p className="text-xs text-gray-400 hidden sm:block max-w-xs truncate">&ldquo;{item.notes}&rdquo;</p>}
                   <Link href={currentUser ? `/proposals/new?libraryItemId=${item.id}&receiverId=${owner.id}` : `/login`}>
-                    <Button size="sm" className="gap-1 flex-shrink-0">Propose <ArrowRight className="h-3.5 w-3.5" /></Button>
+                    <Button size="sm" className="gap-1 flex-shrink-0">Proponi <ArrowRight className="h-3.5 w-3.5" /></Button>
                   </Link>
                 </div>
               )
@@ -119,7 +119,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ slu
 
       {wanters.length > 0 && (
         <section>
-          <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-4">People looking for this ({wanters.length})</h2>
+          <h2 className="text-xl font-extrabold text-[#1a1a1a] tracking-tight mb-4">Utenti che lo cercano ({wanters.length})</h2>
           <div className="flex flex-wrap gap-2">
             {wanters.map(({ user_wishlist: w, users: u }) => (
               <Link key={w.id} href={`/profile/${u.username}`} className="flex items-center gap-2 px-3 py-2 rounded-full bg-white shadow-sm hover:shadow-md text-sm font-semibold transition-all duration-200">

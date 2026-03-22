@@ -45,7 +45,7 @@ export default async function AdminProposalsPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Proposals</h1>
+      <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight mb-6">Proposte</h1>
 
       {/* Status filters */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -53,7 +53,7 @@ export default async function AdminProposalsPage({
           href="/admin/proposals"
           className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${!params.status ? 'bg-brand text-white border-brand' : 'border-gray-300 hover:border-brand text-gray-600'}`}
         >
-          All
+          Tutte
         </Link>
         {STATUSES.map((s) => (
           <Link
@@ -70,11 +70,11 @@ export default async function AdminProposalsPage({
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Proposer</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Receiver</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Created</th>
-              <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">View</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Proponente</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Destinatario</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Stato</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Data</th>
+              <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Vedi</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -90,7 +90,7 @@ export default async function AdminProposalsPage({
                 <td className="px-4 py-3 text-gray-500">{formatDate(row.proposals.createdAt.toISOString())}</td>
                 <td className="px-4 py-3 text-right">
                   <Link href={`/proposals/${row.proposals.id}`} className="text-brand hover:underline text-xs">
-                    View →
+                    Vedi →
                   </Link>
                 </td>
               </tr>

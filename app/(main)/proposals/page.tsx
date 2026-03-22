@@ -11,7 +11,7 @@ import { formatRelativeDate, formatProposalStatus, daysUntil } from '@/lib/utils
 import { ArrowLeftRight, Clock } from 'lucide-react'
 import type { ProposalRow, UserRow, LibraryItemWithGame } from '@/types/database'
 
-export const metadata = { title: 'Proposals — Gamexchange' }
+export const metadata = { title: 'Proposte — Gamexchange' }
 
 const statusVariant: Record<string, 'default' | 'success' | 'warning' | 'destructive' | 'info'> = {
   pending: 'warning', counter_proposed: 'info', accepted: 'success',
@@ -108,15 +108,15 @@ export default async function ProposalsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">Proposals</h1>
+        <h1 className="text-2xl font-extrabold text-[#1a1a1a] tracking-tight">Proposte</h1>
       </div>
       <Tabs defaultValue="received">
         <TabsList>
           <TabsTrigger value="received">
-            Received {receivedActive > 0 && <Badge variant="brand" className="ml-2">{receivedActive}</Badge>}
+            Ricevute {receivedActive > 0 && <Badge variant="brand" className="ml-2">{receivedActive}</Badge>}
           </TabsTrigger>
           <TabsTrigger value="sent">
-            Sent {sentActive > 0 && <Badge variant="warning" className="ml-2">{sentActive}</Badge>}
+            Inviate {sentActive > 0 && <Badge variant="warning" className="ml-2">{sentActive}</Badge>}
           </TabsTrigger>
         </TabsList>
         <TabsContent value="received">
@@ -135,7 +135,7 @@ function ProposalList({ proposals: props, type }: { proposals: ProposalWithDetai
     return (
       <div className="py-16 text-center">
         <ArrowLeftRight className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-        <p className="text-gray-500 text-sm">No proposals yet.</p>
+        <p className="text-gray-500 text-sm">Nessuna proposta ancora.</p>
       </div>
     )
   }
@@ -155,12 +155,12 @@ function ProposalList({ proposals: props, type }: { proposals: ProposalWithDetai
                 <Badge variant={statusVariant[proposal.status] ?? 'default'}>{formatProposalStatus(proposal.status)}</Badge>
               </div>
               <p className="text-xs text-gray-500 mt-0.5 truncate">
-                {type === 'received' ? 'Wants your' : 'You want'}: <strong>{game?.title}</strong>
+                {type === 'received' ? 'Vuole il tuo' : 'Vuoi'}: <strong>{game?.title}</strong>
               </p>
               {isActive && days <= 2 && (
                 <div className="flex items-center gap-1 mt-0.5">
                   <Clock className="h-3 w-3 text-amber-500" />
-                  <span className="text-xs text-amber-600">Expires in {days}d</span>
+                  <span className="text-xs text-amber-600">Scade in {days}g</span>
                 </div>
               )}
             </div>
