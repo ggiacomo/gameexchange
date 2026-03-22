@@ -75,13 +75,13 @@ export default async function BrowsePage({
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <Link
                   href="/register"
-                  className="h-12 px-8 rounded-full bg-brand text-white font-bold text-base hover:bg-brand-dark transition-colors"
+                  className="h-12 px-8 rounded-full bg-brand text-white font-bold text-base hover:bg-brand-dark transition-colors flex items-center justify-center"
                 >
                   Inizia a pubblicare
                 </Link>
                 <Link
                   href="#games"
-                  className="h-12 px-8 rounded-full border-2 border-white/20 text-white font-bold text-base hover:bg-white/10 transition-colors"
+                  className="h-12 px-8 rounded-full border-2 border-white/20 text-white font-bold text-base hover:bg-white/10 transition-colors flex items-center justify-center"
                 >
                   Sfoglia i giochi
                 </Link>
