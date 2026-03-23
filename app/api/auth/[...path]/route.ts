@@ -2,13 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const BASE_URL = process.env.NEON_AUTH_BASE_URL!
 
-// Questi header vengono inoltrati al backend Neon Auth.
-// NON includiamo 'origin': il nostro proxy è server-to-server, non un browser,
-// quindi non deve mandare Origin. Senza Origin, better-auth tratta la richiesta
-// come trusted server request e salta la validazione CORS.
-// NON includiamo 'referer' — better-auth lo usa come fallback per l'Origin,
-// il che causerebbe INVALID_ORIGIN. Senza referer e senza Origin, better-auth
-// tratta la richiesta come server-to-server e salta la validazione.
+// Header inoltrati al backend Neon Auth.
+// Includiamo Origin (derivato dall'URL della richiesta) perché Neon Auth lo richiede.
+// Il dominio è già nei trusted origins del progetto Neon Auth.
+// NON includiamo referer per evitare ambiguità nella validazione origine.
 const FORWARDED_HEADERS = ['user-agent', 'content-type', 'authorization', 'cookie']
 
 async function handler(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
@@ -23,7 +20,7 @@ async function handler(request: NextRequest, { params }: { params: Promise<{ pat
     const value = request.headers.get(name)
     if (value) headers.set(name, value)
   }
-  // Identifica la richiesta come proxy server-side (non browser)
+  headers.set('origin', new URL(request.url).origin)
   headers.set('x-neon-auth-proxy', 'nextjs')
   headers.set('X-Neon-Auth-Next-Middleware', 'true')
 
