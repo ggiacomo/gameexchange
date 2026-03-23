@@ -1,11 +1,8 @@
-import { headers } from 'next/headers'
-import { auth } from './index'
+import { neonAuth, createAuthServer } from '@neondatabase/auth/next/server'
 
-export async function getSession() {
-  return auth.api.getSession({ headers: await headers() })
-}
+export const authServer = createAuthServer()
 
 export async function getCurrentUser() {
-  const session = await getSession()
-  return session?.user ?? null
+  const { user } = await neonAuth()
+  return user ?? null
 }

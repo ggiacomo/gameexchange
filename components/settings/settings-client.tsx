@@ -14,7 +14,6 @@ import { useToast } from '@/components/ui/toast'
 import { useRouter } from 'next/navigation'
 import { CheckCircle, Mail } from 'lucide-react'
 import { authClient } from '@/lib/auth/client'
-import { db } from '@/lib/db'
 import type { UserRow } from '@/types/database'
 
 const schema = z.object({

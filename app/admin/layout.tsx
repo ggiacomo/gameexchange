@@ -1,7 +1,4 @@
 import { getCurrentUser } from '@/lib/auth/server'
-import { db } from '@/lib/db'
-import { authUser } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LayoutDashboard, Users, ArrowLeftRight, Star, BarChart2, Gamepad2 } from 'lucide-react'
@@ -18,8 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const user = await getCurrentUser()
   if (!user) redirect('/login')
 
-  const [authRow] = await db.select({ email: authUser.email }).from(authUser).where(eq(authUser.id, user.id)).limit(1)
-  const isAdmin = authRow?.email?.endsWith('@gamexchange.app')
+  const isAdmin = user.email === process.env.ADMIN_EMAIL
   if (!isAdmin) redirect('/')
 
   return (
