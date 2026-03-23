@@ -67,6 +67,7 @@ export function RegisterForm() {
       email: data.email,
       password: data.password,
       name: data.username,
+      callbackURL: `${window.location.origin}/confirm`,
     })
 
     if (authError) {

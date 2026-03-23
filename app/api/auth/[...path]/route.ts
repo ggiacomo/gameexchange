@@ -6,7 +6,10 @@ const BASE_URL = process.env.NEON_AUTH_BASE_URL!
 // NON includiamo 'origin': il nostro proxy è server-to-server, non un browser,
 // quindi non deve mandare Origin. Senza Origin, better-auth tratta la richiesta
 // come trusted server request e salta la validazione CORS.
-const FORWARDED_HEADERS = ['user-agent', 'content-type', 'authorization', 'referer', 'cookie']
+// NON includiamo 'referer' — better-auth lo usa come fallback per l'Origin,
+// il che causerebbe INVALID_ORIGIN. Senza referer e senza Origin, better-auth
+// tratta la richiesta come server-to-server e salta la validazione.
+const FORWARDED_HEADERS = ['user-agent', 'content-type', 'authorization', 'cookie']
 
 async function handler(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params
