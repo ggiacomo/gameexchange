@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const BASE_URL = process.env.NEON_AUTH_BASE_URL!
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
 const FORWARDED_HEADERS = ['user-agent', 'content-type', 'authorization', 'referer', 'cookie']
+
+// Derive origin from the actual request URL — on Vercel this is always the app domain,
+// which is what Neon Auth needs to match against its trusted origins list.
+function getOrigin(request: NextRequest): string {
+  return new URL(request.url).origin
+}
 
 async function handler(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params
@@ -17,8 +22,7 @@ async function handler(request: NextRequest, { params }: { params: Promise<{ pat
     const value = request.headers.get(name)
     if (value) headers.set(name, value)
   }
-  // Always use our server URL as origin so Neon only needs one trusted origin
-  headers.set('origin', APP_URL)
+  headers.set('origin', getOrigin(request))
   headers.set('x-neon-auth-proxy', 'nextjs')
   headers.set('X-Neon-Auth-Next-Middleware', 'true')
 

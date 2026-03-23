@@ -41,7 +41,7 @@ export function LoginForm() {
   const handleGoogle = async () => {
     await authClient.signIn.social({
       provider: 'google',
-      callbackURL: '/',
+      callbackURL: '/feed',
     })
   }
 
