@@ -44,6 +44,14 @@ test.describe('Debug API auth', () => {
     console.log(JSON.stringify(neonCookies.map(c => ({ name: c.name, value: c.value.slice(0, 20) + '...', domain: c.domain, httpOnly: c.httpOnly })), null, 2))
     console.log('URL attuale:', page.url())
 
+    // Chiama l'endpoint debug per vedere se getCurrentUser() funziona con i cookie del browser
+    const sessionData = await page.evaluate(async () => {
+      const res = await fetch('/api/debug-session', { method: 'POST' })
+      return res.json()
+    })
+    console.log('=== RISULTATO getCurrentUser() SERVER-SIDE ===')
+    console.log(JSON.stringify(sessionData, null, 2))
+
     // Il test non fallisce — serve solo per vedere i log
     expect(responses.length).toBeGreaterThan(0)
   })
