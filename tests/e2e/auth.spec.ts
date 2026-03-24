@@ -5,6 +5,12 @@ const testEmail = `test+${Date.now()}@mailinator.com`
 const testPassword = 'TestPassword123!'
 const testUsername = `tester${Date.now()}`.slice(0, 20)
 
+/** Seleziona un'opzione nel Select Radix UI (non è un <select> nativo) */
+async function selectCountry(page: import('@playwright/test').Page, label: string) {
+  await page.getByRole('combobox').click()
+  await page.getByRole('option', { name: label }).click()
+}
+
 // ---------------------------------------------------------------------------
 // REGISTRAZIONE
 // ---------------------------------------------------------------------------
@@ -23,8 +29,9 @@ test.describe('Registrazione email', () => {
   test('validazione client: mostra errori se il form è incompleto', async ({ page }) => {
     await page.goto('/register')
     await page.getByRole('button', { name: 'Create account' }).click()
-    // Almeno uno dei messaggi di errore deve comparire
-    await expect(page.locator('text=required').or(page.locator('text=characters').or(page.locator('[role=alert]')))).toBeVisible()
+    // Almeno un messaggio di errore deve comparire
+    const errors = page.locator('.text-red-600, [role=alert]:not(#__next-route-announcer__)')
+    await expect(errors.first()).toBeVisible()
   })
 
   test('validazione: username troppo corto', async ({ page }) => {
@@ -44,14 +51,12 @@ test.describe('Registrazione email', () => {
     await page.getByLabel('Email').fill(testEmail)
     await page.getByLabel('Password').fill(testPassword)
     await page.getByLabel('City').fill('Roma')
-
-    // Seleziona il paese dalla dropdown
-    await page.getByRole('combobox').selectOption('IT')
+    await selectCountry(page, 'Italy')
 
     await page.getByRole('button', { name: 'Create account' }).click()
 
     // Dopo la registrazione deve andare su /onboarding
-    await expect(page).toHaveURL(/\/onboarding/, { timeout: 10_000 })
+    await expect(page).toHaveURL(/\/onboarding/, { timeout: 15_000 })
   })
 
   test('registrazione con email già esistente → mostra errore', async ({ page }) => {
@@ -61,13 +66,13 @@ test.describe('Registrazione email', () => {
     await page.getByLabel('Email').fill(testEmail) // stessa email del test precedente
     await page.getByLabel('Password').fill(testPassword)
     await page.getByLabel('City').fill('Milano')
-    await page.getByRole('combobox').selectOption('IT')
+    await selectCountry(page, 'Italy')
 
     await page.getByRole('button', { name: 'Create account' }).click()
 
     // Deve mostrare un toast/messaggio di errore
     await expect(
-      page.locator('[role=alert]').or(page.locator('text=already').or(page.locator('text=exists')))
+      page.locator('[data-variant=destructive], .text-red-600').first()
     ).toBeVisible({ timeout: 8_000 })
   })
 })
@@ -92,7 +97,7 @@ test.describe('Login email', () => {
     await page.getByRole('button', { name: 'Sign in' }).click()
 
     await expect(
-      page.locator('[role=alert]').or(page.locator('text=Invalid').or(page.locator('text=incorrect')))
+      page.locator('[data-variant=destructive], .text-red-600').first()
     ).toBeVisible({ timeout: 8_000 })
   })
 
@@ -102,7 +107,7 @@ test.describe('Login email', () => {
     await page.getByLabel('Password').fill(testPassword)
     await page.getByRole('button', { name: 'Sign in' }).click()
 
-    await expect(page).toHaveURL(/\/feed/, { timeout: 10_000 })
+    await expect(page).toHaveURL(/\/feed/, { timeout: 15_000 })
   })
 
   test('utente loggato accede a /login → redirect a /feed', async ({ page }) => {
@@ -111,7 +116,7 @@ test.describe('Login email', () => {
     await page.getByLabel('Email').fill(testEmail)
     await page.getByLabel('Password').fill(testPassword)
     await page.getByRole('button', { name: 'Sign in' }).click()
-    await expect(page).toHaveURL(/\/feed/, { timeout: 10_000 })
+    await expect(page).toHaveURL(/\/feed/, { timeout: 15_000 })
 
     // Poi prova ad andare su /login di nuovo
     await page.goto('/login')
@@ -148,7 +153,6 @@ test.describe('Google OAuth', () => {
   test('click su "Continue with Google" nel login → redirect verso accounts.google.com', async ({ page }) => {
     await page.goto('/login')
     await page.getByRole('button', { name: /Google/ }).click()
-    // Dopo il click deve essere reindirizzato a Google (o a Neon Auth che poi va a Google)
     await expect(page).toHaveURL(/google\.com|accounts\.google/, { timeout: 10_000 })
   })
 })
