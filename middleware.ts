@@ -6,11 +6,13 @@ const protectedMiddleware = neonAuthMiddleware({ loginUrl: '/login' })
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Redirect logged-in users away from auth pages
+  // Redirect logged-in users away from auth pages (GET only — POST/PUT are server action calls)
   if (pathname === '/login' || pathname === '/register') {
-    const sessionCookie = request.cookies.get('__Secure-neon-auth.session_token')
-    if (sessionCookie?.value) {
-      return NextResponse.redirect(new URL('/feed', request.url))
+    if (request.method === 'GET') {
+      const sessionCookie = request.cookies.get('__Secure-neon-auth.session_token')
+      if (sessionCookie?.value) {
+        return NextResponse.redirect(new URL('/feed', request.url))
+      }
     }
     return NextResponse.next()
   }
