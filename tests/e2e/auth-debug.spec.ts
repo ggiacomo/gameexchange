@@ -5,14 +5,15 @@ import { test, expect } from '@playwright/test'
  * cosa ritorna il proxy /api/auth/* su Neon Auth.
  */
 test.describe('Debug API auth', () => {
-  test('sign-up/email: risposta raw del proxy', async ({ page }) => {
-    const responses: { url: string; status: number; body: string }[] = []
+  test('sign-up/email: risposta raw del proxy + cookie check', async ({ page, context }) => {
+    const responses: { url: string; status: number; body: string; setCookie: string | null }[] = []
 
     page.on('response', async (res) => {
       if (res.url().includes('/api/auth/')) {
         try {
           const body = await res.text()
-          responses.push({ url: res.url(), status: res.status(), body })
+          const setCookie = res.headers()['set-cookie'] ?? null
+          responses.push({ url: res.url(), status: res.status(), body, setCookie })
         } catch { /* ignore */ }
       }
     })
@@ -27,13 +28,21 @@ test.describe('Debug API auth', () => {
     await page.getByRole('button', { name: 'Create account' }).click()
 
     // Aspetta che arrivi una risposta API
-    await page.waitForTimeout(5000)
+    await page.waitForTimeout(8000)
 
     console.log('=== RISPOSTE API AUTH ===')
     for (const r of responses) {
       console.log(`${r.status} ${r.url}`)
-      console.log('Body:', r.body.slice(0, 500))
+      console.log('Body:', r.body.slice(0, 300))
+      console.log('Set-Cookie header:', r.setCookie)
     }
+
+    // Cookie nel browser dopo signup
+    const cookies = await context.cookies()
+    const neonCookies = cookies.filter(c => c.name.includes('neon-auth'))
+    console.log('=== COOKIE NEL BROWSER ===')
+    console.log(JSON.stringify(neonCookies.map(c => ({ name: c.name, value: c.value.slice(0, 20) + '...', domain: c.domain, httpOnly: c.httpOnly })), null, 2))
+    console.log('URL attuale:', page.url())
 
     // Il test non fallisce — serve solo per vedere i log
     expect(responses.length).toBeGreaterThan(0)
